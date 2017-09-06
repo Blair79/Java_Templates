@@ -725,6 +725,42 @@ public class MyArrayCopy {
  * 
  * Array size before copy: 7
  * New array size after copying: 10
+ */</template><template autoinsert="true" context="java" deleted="false" description="Wie kann man ein Array kürzen?" enabled="true" name="MyArray_cut">/*
+ * Das Kürzen eines Arrays kann durch Umkopieren realisiert werden.
+ * Die statische Methode System.arraycopy() liefert hierzu die notwendige Routine.
+ */
+
+public class ArrayKuerzen {
+
+	public static void main(String[] args) {
+		int[] longArr = { 5, 17, 23, 8, 18, 36, 56, 9, 10, 12 };
+		int count = 0;
+		for (int i : longArr) {
+			if (i % 2 == 0)
+				count++;
+		}
+		int[] shortArr = new int[count];
+		int k = 0;
+		for (int i : longArr) {
+			if (i % 2 == 0) {
+				shortArr[k] = i;
+				k++;
+			}
+		}
+		for (int i : shortArr)
+			System.out.println(i);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 8
+ * 18
+ * 36
+ * 56
+ * 10
+ * 12
  */</template><template autoinsert="true" context="java" deleted="false" description="How to compare two arrays and confirm they are equal?" enabled="true" name="MyArray_deepEquals">/*
  * Java Arrays class provides few utility methods. One of the utility
  * method Arrays.deepEquals() helps us to compare two arrays. This method
@@ -785,7 +821,71 @@ public class MyArrayFill {
  * Assigned
  * Assigned
  * Assigned
- */</template><template autoinsert="true" context="java" deleted="false" description="One Dimensional Array" enabled="true" name="MyArray_One_Dimensional">${type} ${type}${Array}[];</template><template autoinsert="true" context="java" deleted="false" description="One Dimensional Array initialized" enabled="true" name="MyArray_One_Dimensional_init">${type} ${type}${Array}[] = {${value1},${value2}};</template><template autoinsert="true" context="java" deleted="false" description="How to copy range of elements from an array?" enabled="true" name="MyArray_rangeCopy">/*
+ */</template><template autoinsert="true" context="java" deleted="false" description="Wie kann man den Inhalt eines Arrays mischen?" enabled="true" name="MyArray_mix">import java.util.Random;
+
+/*
+ * Dies ist mit Hilfe eines Pseudo-Zufallswertes und einer Hilfsvariablen einfach
+ * zu realisieren.
+ */
+
+public class Array_mischen {
+
+	private static int[] arrayMix(int[] zahlen) {
+		int tmp;
+		int rand;
+		Random r = new Random();
+		for (int i = 0; i &lt; zahlen.length; i++) {
+			rand = r.nextInt(zahlen.length);
+			tmp = zahlen[i];
+			zahlen[i] = zahlen[rand];
+			zahlen[rand] = tmp;
+		}
+		return zahlen;
+	}
+
+	public static void main(String[] args) {
+		int[] zahlen = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		zahlen = arrayMix(zahlen);
+		for (int i : zahlen)
+			System.out.println(i);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 9
+ * 10
+ * 8
+ * 1
+ * 5
+ * 0
+ * 3
+ * 4
+ * 6
+ * 7
+ * 2
+ */</template><template autoinsert="true" context="java" deleted="false" description="One Dimensional Array" enabled="true" name="MyArray_One_Dimensional">${type} ${type}${Array}[];</template><template autoinsert="true" context="java" deleted="false" description="One Dimensional Array initialized" enabled="true" name="MyArray_One_Dimensional_init">${type} ${type}${Array}[] = {${value1},${value2}};</template><template autoinsert="true" context="java" deleted="false" description="Wie kann man auf die Schnelle einen Überblick über die Inhalte eines Arrays erhalten?" enabled="true" name="MyArray_out">import java.util.Arrays;
+
+/*
+ * Üblicherweise werden Arrays mit der Hilfe von Schleifen ausgegeben.
+ * Sollen alle Werte jedoch auf die Schnelle als Gesamtheit ausgegeben werden,
+ * so kann dies mit Hilfe der statischen Methode Arrays.toString() erreicht werden,
+ * wie im folgenden Beispiel zu sehen ist
+ */
+
+public class ArrayAusgeben {
+	public static void main(String[] args) {
+		String[] s = { "eins", "zwei", "drei" };
+		System.out.println(Arrays.toString(s));
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * [eins, zwei, drei]
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to copy range of elements from an array?" enabled="true" name="MyArray_rangeCopy">/*
  * Java Arrays class provides few utility methods. One of the utility
  * method Arrays.copyOfRange() helps us to copy range of object from
  * existing array to new array. Below example shows how to copy range of
@@ -875,6 +975,37 @@ public class MyStringArraySorting {
  * Example Output
  * 
  * C++ JAVA PERL PLAY STRUTS 
+ */</template><template autoinsert="true" context="java" deleted="false" description="Wie lassen sich Arrays nach bestimmten Kriterien filtern? " enabled="true" name="MyArray_Stream">import java.util.Arrays;
+import java.util.Random;
+
+/*
+ * In Java 8 wurde mit Streams eine Möglichkeit geschaffen, sequenzielle und
+ * parallele Operationen auf Arrays und Listen auszuführen. Dies ermöglicht auch,
+ * diese auf sehr effiziente Weise zu filtern.
+ */
+
+public class ArrayFiltern {
+
+	public static void main(String[] args) {
+		Integer[] i = new Integer[100];
+		for (int num = 0; num &lt; i.length; num++) {
+			i[num] = new Random().nextInt(100);
+		}
+		Arrays.stream(i).filter(n -&gt; n % 2 == 0).sorted().forEach(k -&gt; System.out.println(k));
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 4
+ * 4
+ * 8
+ * 12
+ * 14
+ * 16
+ * 18
+ * 20
  */</template><template autoinsert="true" context="java" deleted="false" description="Basic ArrayList Operations." enabled="true" name="MyArrayList_Basic">import java.util.ArrayList;
 
 /*
@@ -2860,6 +2991,14 @@ public class MySyncSet {
  * Example Output
  * 
  * Synchronized set got created...
+ */</template><template autoinsert="true" context="java" deleted="false" description="Umschliesst den markierten Text mit Kommentaren eines CodeTemplates" enabled="true" name="MyCommentTemplate">/*
+ * 
+ */
+
+${line_selection}
+
+/*
+ * Example Output
  */</template><template autoinsert="true" context="java" deleted="false" description="How to read input from java console in java?" enabled="true" name="MyConsole">import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -3115,6 +3254,52 @@ public class MyAfterDateTest {
  * Example Output
  * 
  * The date is future day
+ */</template><template autoinsert="true" context="java" deleted="false" description="Ab Java 8 wird dies durch die Klassen java.time.DateTime und java.time.format.DateTimeFormatter erheblich vereinfacht." enabled="true" name="MyDate_AMPM">import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+/*
+ * Im englischen Sprachraum werden Zeiten üblicherweise in der 12-Stunden-Zählung
+ * angegeben und der vormittägliche und nachmittägliche Bereich durch AM (ante
+ * meridiem) und PM (post meridiem) gekennzeichnet. Bis Java 7 ermöglicht die
+ * Klasse Calendar die Ermittlung dieser Abkürzungen zu einem gegebenen Zeitpunkt.
+ * Ab Java 8 können hierfür auch die Klassen java.time.DateTime und
+ * java.time.format.DateTimeFormatter verwendet werden.
+ */
+
+public class AMorPM {
+
+	public static void main(String[] args) {
+		amOrPm();
+		amOrPmJava8();
+	}
+
+	private static void amOrPm() {
+		GregorianCalendar cal = (GregorianCalendar) GregorianCalendar.getInstance();
+		Date time = new Date();
+		cal.setTime(time);
+		int h = cal.get(Calendar.HOUR);
+		int m = cal.get(Calendar.MINUTE);
+		if (cal.get(Calendar.AM_PM) == Calendar.AM)
+			System.out.println(h + ":" + m + "AM");
+		else
+			System.out.println(h + ":" + m + "PM");
+	}
+
+	private static void amOrPmJava8() {
+		LocalTime time = LocalTime.now();
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("K:ma");
+		System.out.println(time.format(df));
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 1:1AM
+ * 1:1AM
  */</template><template autoinsert="true" context="java" deleted="false" description="Java Date basic functions." enabled="true" name="MyDate_Basic">import java.util.Date;
 
 /*
@@ -3236,6 +3421,186 @@ public class MyDateDifferenceExamples {
  * Time difference in minutes: 2880
  * Time difference in hours: 48
  * Time difference in days: 2
+ */</template><template autoinsert="true" context="java" deleted="false" description="Wie lassen sich deutsche Datum-Strings vergleichen und sortieren?" enabled="true" name="MyDate_Comparator">import java.util.Arrays;
+import java.util.Comparator;
+
+/*
+ * Das deutsche Datumsformat scheint für eine Sortierung denkbar ungeeignet,
+ * da die Reihenfolge der Notation zuerst die Tage, dann die Monate und erst
+ * zum Schluss die Jahre berücksichtigt. Die Sortierung anhand zweier
+ * aufeinanderfolgender Werte von links nach rechts muss somit fehlschlagen.
+ * Das Interface Comparator macht es glücklicherweise sehr einfach, eigene
+ * Kriterien für einen Vergleich und somit auch für eine Sortierung zu schreiben.
+ * Hierzu muss seine Methode compare() konkretisiert werden.
+ */
+
+public class DatumsVergleich {
+
+	public static void main(String[] args) {
+		String[] daten = { "16.05.1703", "08.12.1925", "08.06.1925", "12.02.1031" };
+		System.out.println("Vorher:");
+		for (String s : daten) {
+			System.out.println(s);
+		}
+		System.out.println("\nNachher:");
+		Arrays.sort(daten, new DateComparator(false));
+		for (String s : daten) {
+			System.out.println(s);
+		}
+
+		DateComparator dc = new DateComparator();
+		System.out.println("Vergleich von " + daten[0] + " und " + daten[1] + ": " + dc.compare(daten[0], daten[1]));
+		System.out.println("Vergleich von " + daten[1] + " und " + daten[2] + ": " + dc.compare(daten[1], daten[2]));
+		System.out.println("Vergleich von " + daten[2] + " und " + daten[3] + ": " + dc.compare(daten[2], daten[3]));
+		System.out.println("Vergleich von " + daten[3] + " und " + daten[0] + ": " + dc.compare(daten[3], daten[0]));
+	}
+}
+
+class DateComparator implements Comparator&lt;String&gt; {
+
+	boolean sortType = true;
+
+	public DateComparator() {
+		this(true);
+	}
+
+	public DateComparator(boolean sortType) {
+		this.sortType = sortType;
+	}
+
+	public int compare(String arg0, String arg1) {
+		String[] date0 = arg0.split("\\.");
+		String[] date1 = arg1.split("\\.");
+		if (date0.length != date1.length)
+			throw new ClassCastException();
+		String compStr0 = date0[2] + date0[1] + date0[0];
+		String compStr1 = date1[2] + date1[1] + date1[0];
+		if (!sortType)
+			return compStr0.compareTo(compStr1) * -1;
+		return compStr0.compareTo(compStr1);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Vorher:
+ * 16.05.1703
+ * 08.12.1925
+ * 08.06.1925
+ * 12.02.1031
+ * 
+ * Nachher:
+ * 08.12.1925
+ * 08.06.1925
+ * 16.05.1703
+ * 12.02.1031
+ * Vergleich von 08.12.1925 und 08.06.1925: 1
+ * Vergleich von 08.06.1925 und 16.05.1703: 2
+ * Vergleich von 16.05.1703 und 12.02.1031: 7
+ * Vergleich von 12.02.1031 und 08.12.1925: -9
+ */</template><template autoinsert="true" context="java" deleted="false" description="Die Ausgabe des aktuellen Datums" enabled="true" name="MyDate_currentDate">import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+/*
+ * Bis Java 7 stellen die Klassen Date und GregorianCalendar zwei Möglichkeiten
+ * dar, um das aktuelle Datum auszugeben. Die Formatierung erfolgt durch die
+ * Klassen DateFormat und deren Ableitung SimpleDateFormat. Ab Java 8 wurde die
+ * API in erheblichem Maße geändert und insgesamt intuitiver gestaltet.
+ */
+
+public class AktuellesDatum {
+
+	static void printGregorianCalendarDate() {
+		GregorianCalendar now = new GregorianCalendar();
+		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT); // 14.04.12
+		df = DateFormat.getDateInstance(DateFormat.MEDIUM); // 14.04.2012
+		df = DateFormat.getDateInstance(DateFormat.LONG); // 14. April 2012
+		System.out.println(df.format(now.getTime()));
+		df = DateFormat.getTimeInstance(DateFormat.SHORT); // 21:21
+		df = DateFormat.getTimeInstance(DateFormat.MEDIUM); // 21:21:12
+		df = DateFormat.getTimeInstance(DateFormat.LONG); // 21:21:12 MESZ
+		System.out.println(df.format(now.getTime()));
+		df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.LONG); // 14.04.12
+																				// 21:34:07
+																				// MESZ
+		System.out.println(df.format(now.getTime()));
+	}
+
+	static void printSimpleDateFormat() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd - HH:mm:ss ");
+		Date currentTime = new Date();
+		System.out.println(formatter.format(currentTime)); // 2012.04.14 -
+															// 21:34:07
+	}
+
+	public static void main(String[] args) {
+		printGregorianCalendarDate();
+		printSimpleDateFormat();
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 6. September 2017
+ * 00:57:02 MESZ
+ * 06.09.17 00:57:02 MESZ
+ * 2017.09.06 - 00:57:02 
+ */</template><template autoinsert="true" context="java" deleted="false" description="Ab Java 8 wurde die API in erheblichem Maße geändert und insgesamt intuitiver gestaltet. " enabled="true" name="MyDate_currentDateJ8">import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.LocalDate;
+
+/*
+ * Ab Java 8
+ */
+
+public class AktuellesDatumJava8 {
+
+	static void formatDateTime() {
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter df;
+		df = DateTimeFormatter.BASIC_ISO_DATE; // 20160131
+		df = DateTimeFormatter.ISO_LOCAL_DATE; // 2016-18-31
+		df = DateTimeFormatter.ISO_DATE_TIME; // 2016-01-31T20:07:07.095
+		System.out.println(now.format(df));
+		df = DateTimeFormatter.ofPattern("dd.MM.yyyy kk:mm"); // 31.01.2016
+																// 20:07
+		System.out.println(now.format(df));
+	}
+
+	static void formatDate() {
+		LocalDate date = LocalDate.now();
+		DateTimeFormatter df;
+		System.out.println(date); // 2016-01-31
+		df = DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL); // Sonntag,
+																	// 31.
+																	// Januar
+																	// 2016
+		df = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG); // 31. Januar
+																	// 2016
+		df = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM); // 31.01.2016
+		df = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT); // 31.01.16
+		System.out.println(date.format(df));
+
+	}
+
+	public static void main(String[] args) {
+		formatDateTime();
+		formatDate();
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 2017-09-06T00:59:22.962
+ * 06.09.2017 24:59
+ * 2017-09-06
+ * 06.09.17
  */</template><template autoinsert="true" context="java" deleted="false" description="How to get current time in milli seconds?" enabled="true" name="MyDate_currentTimeMillis">/*
  * How to get current time in milli seconds?
 */
@@ -3253,6 +3618,128 @@ public class MyCurrentTime {
  * Example Output
  * 
  * Current time in millis: 1504186996539
+ */</template><template autoinsert="true" context="java" deleted="false" description="Mit der Joda-Bibliothek lassen sich bis Java 7 Datumsberechnungen wesentlich einfacher durchführen als mit den Java-eigenen Date- und Time-Klassen. Das ändert sich mit Java 8." enabled="true" name="MyDate_DateDiffChristmas">/*
+ * Der Umgang mit Datumsberechnungen ist in Java bis zur Version 7 nicht sehr
+ * glücklich gelöst. Bei diesen Versionen ist es sinnvoll mit der Joda-Bibliothek
+ * zu arbeiten. Ab Java 8 stehen auch in den Java Core-Libs durch die
+ * Date-Time-API Klassen bereit, die z.B. Datums-Berechnungen erlauben, die
+ * bislang nur mit der Joda-Bibliothek einigermaßen komfortabel erledigt werden
+ * konnten.
+ * Im ersten Beispiel wird demonstriert, wie die verbleibenden Monate und Tage
+ * bis zum Weihnachtsfest des aktuellen Jahres mit der Joda-Bibliothek berechnet
+ * werden können, im zweiten, wie sich dies mit Java 8 gestaltet. 
+ */
+
+import java.time.LocalDate;
+import java.time.Period;
+
+public class DatumsDifferenz {
+
+	public static void main(String[] args) {
+		LocalDate now = LocalDate.now();
+		LocalDate endDate = LocalDate.of(now.getYear(), 12, 24);
+		Period p = Period.between(now, endDate);
+		int y = p.getYears();
+		int m = p.getMonths();
+		int d = p.getDays();
+		String yStr = y &gt; 0 ? new Integer(y).toString() + (y &gt; 1 ? " Jahren, " : " Jahr, ") : "";
+		String mStr = m &gt; 0 ? new Integer(m).toString() + (m &gt; 1 ? " Monaten, " : " Monat, ") : "";
+		String dStr = d &gt; 0 ? new Integer(d).toString() + (d &gt; 1 ? " Tagen" : " Tag") : "";
+		int comp = endDate.compareTo(now);
+		if (comp &gt; 0)
+			System.out.println("Weihnachten ist in " + yStr + mStr + dStr + ".");
+		else if (comp == 0)
+			System.out.println("Heute ist Weihnachten.");
+		else
+			System.out.println("Weihnachten ist vorbei.");
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Weihnachten ist in 3 Monaten, 18 Tagen.
+ */</template><template autoinsert="true" context="java" deleted="false" description="TimerTask" enabled="true" name="MyDate_TimerTask">import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+/*
+ * TimerTask
+ */
+
+public class Zeitsteuerung extends JFrame {
+
+	private Timer t;
+	private JLabel label;
+
+	public Zeitsteuerung() {
+		initGUI();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.pack();
+		this.setLocationRelativeTo(null);
+		this.setTitle("Zeitsteuerung");
+		this.setVisible(true);
+	}
+
+	private void initGUI() {
+		label = new JLabel(" ");
+		JButton butt1 = new JButton("Start");
+		butt1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				t = new Timer();
+				t.schedule(new Task(Zeitsteuerung.this), 0, 1500);
+			}
+		});
+		JButton butt2 = new JButton("Stop");
+		butt2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				t.cancel();
+			}
+		});
+		this.add(label, BorderLayout.NORTH);
+		JPanel panel = new JPanel(new FlowLayout());
+		panel.add(butt1);
+		panel.add(butt2);
+		this.add(panel, BorderLayout.SOUTH);
+	}
+
+	public void setText(String s) {
+		label.setText(s);
+	}
+
+	public String getText() {
+		return label.getText();
+	}
+
+	public static void main(String[] args) {
+		new Zeitsteuerung();
+	}
+}
+
+class Task extends TimerTask {
+	Zeitsteuerung z;
+
+	public Task(Zeitsteuerung z) {
+		this.z = z;
+	}
+
+	public void run() {
+		z.setText(z.getText() + "+");
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * draw Window
  */</template><template autoinsert="true" context="java" deleted="false" description="How to create a date with milli seconds?" enabled="true" name="MyDate_withMilliSeconds">import java.util.Date;
 
 /*
@@ -4104,6 +4591,35 @@ public class MyFilteredFileList {
  * 
  * vmlinuz.old
  * initrd.img.old
+ */</template><template autoinsert="true" context="java" deleted="false" description="Mit Hilfe der Klasse SimpleDateFormat kann man eine Datumsausgabe u.a. entsprechend der Datumskonvention der Systemsprache formatieren." enabled="true" name="MyFile_formatDate">/*
+ * Die Klasse SimpleDateFormat stellt Routinen zur Verfügung, mit denen die
+ * Ausgabe von Datum und Uhrzeit formatiert werden kann.
+ */
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+
+public class DatumFormatieren {
+
+	public DatumFormatieren() {
+
+		String className = getClass().getName();
+		className = className.replace('.', '/');
+		File file = new File(System.getProperty("user.dir") + "/src/" + className + ".java");
+
+		SimpleDateFormat formatter = new SimpleDateFormat();
+		System.out.println(formatter.format(file.lastModified()));
+	}
+
+	public static void main(String[] args) {
+		new DatumFormatieren();
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 01.01.70 01:00
  */</template><template autoinsert="true" context="java" deleted="false" description="How to get file last modified time?" enabled="true" name="MyFile_LastModified">import java.io.File;
 
 /*
@@ -4604,7 +5120,322 @@ public class MyFileFilter {
  * 
  * vmlinuz.old
  * initrd.img.old
- */</template><template autoinsert="true" context="java" deleted="false" description="How implement bounded types (extend superclass) with generics?" enabled="true" name="MyGenerics_extendSuperclass">/*
+ */</template><template autoinsert="true" context="java" deleted="false" description="Das Snippet demonstriert die Anwendung einer Fullscreen-Ansicht in Verbindung mit nicht modalen Dialogen, die jederzeit über dem Hauptfenster sichtbar sein müssen. " enabled="true" name="MyFullscreen">import java.awt.AWTEvent;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.io.File;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+/*
+ * Das Snippet demonstriert die Anwendung einer Fullscreen-Ansicht in Verbindung mit nicht modalen Dialogen,
+ * die jederzeit &amp;uuml;ber dem Hauptfenster sichtbar sein m&amp;uuml;ssen.
+ *
+ */
+
+public class FullscreenDemo {
+
+	public static void main(String[] args) {
+		if (System.getProperty("os.name").equals("Mac OS X")) {
+			// in multi-screen-Umgebungen: nur ein screen ist fullscreen
+			// der zweite wird nicht schwarz
+			System.setProperty("apple.awt.fullscreencapturealldisplays", "false");
+			// fullscreen in einem Window; erm&amp;oumlglicht die Darstellung des
+			// Kontextmenus
+			System.setProperty("apple.awt.fakefullscreen", "true");
+		}
+		new MainFrame();
+	}
+} // Ende class FullscreenDemo
+
+/*
+ * Stellt das GUI des Hauptfensters bereit
+ */
+@SuppressWarnings("serial")
+class MainFrame extends JFrame implements ActionListener {
+
+	private GraphicsDevice myDevice;
+	private JButton showButt, exitButt, fullscreenButt;
+	private boolean isFullscreen;
+
+	public MainFrame() {
+		fullscreenButt = new JButton("Fullscreen ein");
+		fullscreenButt.addActionListener(this);
+		showButt = new JButton("MenuDialog zeigen");
+		showButt.addActionListener(this);
+		this.add(showButt);
+		exitButt = new JButton("Exit");
+		exitButt.addActionListener(this);
+		this.add(exitButt);
+		JPanel topPanel = new JPanel(new FlowLayout());
+		topPanel.add(showButt);
+		topPanel.add(exitButt);
+		topPanel.add(fullscreenButt);
+
+		this.setLayout(new BorderLayout());
+		this.add(new MainPanel(), BorderLayout.CENTER);
+		this.add(topPanel, BorderLayout.NORTH);
+
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setUndecorated(false);
+		this.setSize(this.getToolkit().getScreenSize());
+
+		if (isFullscreen)
+			initDisplayMode();
+		else
+			this.setVisible(true);
+
+	} // Konstruktor
+
+	private void initDisplayMode() {
+		if (checkFullscreen() &amp;&amp; !this.isFullscreen) {
+			// Kommentar entfernen, um zu einer statischen Aufloesung von 1024 x
+			// 768 Pixeln zu wechseln
+			// DisplayMode oldDisplayMode = myDevice.getDisplayMode();
+			// DisplayMode prefDisplayMode = new DisplayMode(1024,
+			// 768,32,DisplayMode.REFRESH_RATE_UNKNOWN);
+			// if(myDevice.isDisplayChangeSupported()) {
+			// myDevice.setDisplayMode(prefDisplayMode);
+			// }
+
+			this.removeNotify();
+			this.setVisible(false);
+			this.setUndecorated(!this.isUndecorated());
+			if (this.isUndecorated()) {
+				// unter Win try-catch-block verwenden um eine stabile
+				// fullscreen-Darstellung zu erzeugen
+				// unter Unix(en) diese vermeiden sonst sind
+				// unter Mac OS X Leiste und Dock nicht verborgen
+				if (System.getProperty("os.name").indexOf("Windows") != -1) {
+					try {
+						myDevice.setFullScreenWindow(this);
+						this.setSize(getToolkit().getScreenSize());
+					} catch (Exception e) {
+					} finally {
+						myDevice.setFullScreenWindow(null);
+					}
+				} else {
+					// Fullscreen-Modus aktivieren
+					myDevice.setFullScreenWindow(this);
+					this.setSize(getToolkit().getScreenSize());
+				}
+				isFullscreen = true;
+			} else {
+				this.setUndecorated(false);
+				isFullscreen = false;
+			}
+			this.addNotify();
+		} else {
+			// konventionelles 'undecorated window' zeigen falls graphic device
+			// kein 'fullscreen' unterstuetzt
+			this.dispose();
+			if (!this.isUndecorated()) {
+				this.setUndecorated(true);
+				isFullscreen = true;
+			} else {
+				this.setUndecorated(false);
+				isFullscreen = false;
+			}
+			this.requestFocus();
+			this.setLocation(0, 0);
+		}
+		this.repaint();
+		this.setVisible(true);
+	}
+
+	// wird 'fullscreen' unterstuetzt?
+	public boolean checkFullscreen() {
+		myDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		return myDevice.isFullScreenSupported();
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == exitButt) {
+			System.exit(0);
+		}
+		if (e.getSource() == showButt) {
+			MenuDialog md = MenuDialog.getMenuDialog();
+			md.setVisible(true);
+			md.setFocusable(true);
+			md.requestFocus();
+		}
+		if (e.getSource() == fullscreenButt) {
+			initDisplayMode();
+			fullscreenButt.setText("Fullscreen ein");
+			if (isFullscreen)
+				fullscreenButt.setText("Fullscreen aus");
+		}
+	}
+}
+
+/*
+ * Nicht modale Elternklasse aller Dialoge, die sich bei Sichtbatrkeit immer
+ * ueber dem Hauptfenster befinden.
+ */
+@SuppressWarnings("serial")
+class DialogTemplate extends JDialog implements ActionListener {
+	public DialogTemplate() {
+		super();
+		this.setLayout(new BorderLayout(5, 5));
+		this.setResizable(false);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setUndecorated(false);
+		this.setFocusable(true);
+		this.setAlwaysOnTop(true);
+		this.setVisible(true);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		this.setVisible(false);
+	}
+}
+
+/*
+ * Stellt einen nicht-modalen Datei-Auswahl-Dialog bereit
+ */
+@SuppressWarnings("serial")
+class FileSelector extends DialogTemplate {
+	private JFileChooser chooser;
+	OKDialog okDialog;
+	JLabel pfadLabel;
+
+	public FileSelector() {
+		super();
+		okDialog = new OKDialog(this);
+		pfadLabel = new JLabel("Abbruch?");
+		okDialog.add(pfadLabel, BorderLayout.CENTER);
+		chooser = new JFileChooser();
+		chooser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				File file = chooser.getSelectedFile();
+				if (file != null &amp;&amp; e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)) {
+					pfadLabel.setText(chooser.getSelectedFile().getAbsolutePath());
+				}
+				if (okDialog != null) {
+					okDialog.setBounds(400, 400, 200, 150);
+					okDialog.pack();
+					okDialog.setVisible(true);
+				}
+			}
+		});
+		this.setBounds(100, 100, 400, 300);
+		this.add(chooser, BorderLayout.CENTER);
+		this.setVisible(false);
+	}
+}
+
+/*
+ * Stellt ein Panel bereit, das im Hauptfenster geladen ist und die
+ * Rechtsklick-Funktionalitaet liefert
+ */
+@SuppressWarnings("serial")
+class MainPanel extends JPanel {
+
+	public MainPanel() {
+		this.enableEvents(AWTEvent.MOUSE_EVENT_MASK);
+		this.add(new JLabel("hier rechts klicken!"));
+		this.setOpaque(true);
+		this.validate();
+	} // Ende Konstruktor
+
+	/*
+	 * Zeigt einen einfachen Dialog durch Rechtsklick als Kontextmenu an.
+	 */
+	@Override
+	public void processMouseEvent(MouseEvent event) {
+
+		if (event.isPopupTrigger()) {
+			MenuDialog menuDialog = MenuDialog.getMenuDialog();
+			final int x = ((JPanel) event.getSource()).getX() + event.getX();
+			final int y = ((JPanel) event.getSource()).getY() + event.getY();
+			menuDialog.setLocation(x, y);
+			if (!menuDialog.isVisible() || !menuDialog.hasFocus()) {
+				menuDialog.setFocusable(true);
+				menuDialog.requestFocus();
+				menuDialog.setVisible(true);
+			} else {
+				this.requestFocus();
+			}
+		}
+		super.processMouseEvent(event);
+	}
+}
+
+/*
+ * Stellt ein einfachen, nicht modalen Menu-Dialog als Singleton bereit
+ */
+@SuppressWarnings("serial")
+class MenuDialog extends DialogTemplate {
+	JButton showButt, exitButt;
+	FileSelector fileSelector = null;
+	private static MenuDialog menuDialog = new MenuDialog();
+
+	public MenuDialog() {
+		super();
+		showButt = new JButton("Datei-Auswahl-Dialog zeigen");
+		showButt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (fileSelector == null)
+					fileSelector = new FileSelector();
+				fileSelector.setVisible(true);
+			}
+		});
+		exitButt = new JButton("Abbruch");
+		exitButt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuDialog.this.setVisible(false);
+			}
+		});
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel.add(showButt);
+		panel.add(exitButt);
+		this.add(panel, BorderLayout.SOUTH);
+		this.setBounds(300, 300, 300, 300);
+		this.pack();
+	}
+
+	public static MenuDialog getMenuDialog() {
+		if (menuDialog == null)
+			menuDialog = new MenuDialog();
+		return menuDialog;
+	}
+}
+
+/*
+ * Stellt einen einfachen, nicht modalen Bestaetigungsdialog bereit
+ */
+@SuppressWarnings("serial")
+class OKDialog extends DialogTemplate {
+	private JButton okButt;
+	Component parent;
+
+	public OKDialog(Component parent) {
+		super();
+		this.parent = parent;
+		okButt = new JButton("ok");
+		okButt.addActionListener(this);
+		this.add(okButt, BorderLayout.SOUTH);
+		this.pack();
+		this.setVisible(false);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		parent.setVisible(false);
+		this.setVisible(false);
+	}
+}</template><template autoinsert="true" context="java" deleted="false" description="How implement bounded types (extend superclass) with generics?" enabled="true" name="MyGenerics_extendSuperclass">/*
  * As of now we have seen examples for only one type parameter. What happens in case
  * we want to access group of objects comes from same family, means extending same
  * super class? You can restrict the generics type parameter to a certain group of
@@ -6586,6 +7417,370 @@ public class MyIstoBr {
  * Example Output
  * 
  * x;x;X;
+ */</template><template autoinsert="true" context="java" deleted="false" description="Open Browser" enabled="true" name="MyIO_openBrowser">/*
+ * Öffnet den Browser lokal oder im Inet
+ */
+
+import java.awt.Desktop;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class BrowserOeffnen extends JFrame implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
+	JButton localButt;
+	JButton iNetButt;
+
+	public BrowserOeffnen() {
+		localButt = new JButton("local");
+		localButt.addActionListener(this);
+		iNetButt = new JButton("Inet");
+		iNetButt.addActionListener(this);
+		this.setLayout(new FlowLayout());
+		this.add(localButt);
+		this.add(iNetButt);
+
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.pack();
+		this.setVisible(true);
+	}
+
+	private void ladeINet(String seite) {
+		try {
+			Desktop.getDesktop().browse(new URI(seite));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void ladeLocal(String seite) {
+		File tmpIndexFile = null;
+		StringBuffer sb = new StringBuffer();
+		PrintWriter pWriter = null;
+		InputStream is = null;
+		try {
+			is = this.getClass().getClassLoader().getResourceAsStream(seite);
+			if (is != null) {
+				int b = 0;
+				while ((b = is.read()) != -1) {
+					sb.append((char) b);
+				}
+
+				tmpIndexFile = File.createTempFile("javabeginners", ".htm");
+				tmpIndexFile.deleteOnExit();
+				if (tmpIndexFile.canWrite()) {
+					pWriter = new PrintWriter(tmpIndexFile);
+					pWriter.write(sb.toString());
+				} else {
+					System.out.println("Tmp-File nicht beschreibbar");
+					return;
+				}
+				Desktop.getDesktop().browse(tmpIndexFile.toURI());
+
+			} else {
+				System.out.println("Laden nicht erfolgreich...");
+			}
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} finally {
+			try {
+				if (is != null)
+					is.close();
+				if (pWriter != null)
+					pWriter.close();
+			} catch (IOException ioe) {
+			}
+		}
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == localButt)
+			ladeLocal("test.htm");
+		if (e.getSource() == iNetButt)
+			ladeINet("http://www.javabeginners.de");
+	}
+
+	public static void main(String[] args) {
+		new BrowserOeffnen();
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Laden nicht erfolgreich...
+ */</template><template autoinsert="true" context="java" deleted="false" description="Das Beispiel stellt zwei Methoden vor, mit denen byte-Arrays in eine Datei geschrieben und wieder ausgelesen werden können." enabled="true" name="MyIO_saveByteArray">import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+/*
+ * In vielen Fällen (z.B. bei Verschlüsselungen, etc) werden Daten nicht als
+ * Strings, sondern z.B. binär als Byte-Arrays in Dateien abgespeichert. Das
+ * Beispiel zeigt, wie diese geschrieben und wieder ausgelesen werden können.
+ */
+
+public class ByteArraySpeichern {
+
+	private boolean writeData(byte[] data, String fileName) {
+		File file = new File(fileName);
+
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(file);
+			fos.write(data);
+			fos.flush();
+			return true;
+		} catch (FileNotFoundException e) {
+			System.err.println(file + " doesn't exist!");
+		} catch (IOException e) {
+			System.err.println("Problems writing data to " + file);
+		} finally {
+			try {
+				if (fos != null)
+					fos.close();
+			} catch (IOException e) {
+			}
+		}
+		return false;
+	}
+
+	private byte[] readData(String fileName) {
+		File file = new File(fileName);
+		FileInputStream fis = null;
+		byte[] data = null;
+		try {
+			fis = new FileInputStream(file);
+			data = new byte[(int) file.length()];
+			fis.read(data);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (fis != null)
+					fis.close();
+			} catch (IOException e) {
+			}
+		}
+		return data;
+	}
+
+	public static void main(String[] args) {
+		String txt = "Eine Eingabe";
+		String fileName = "test";
+		ByteArraySpeichern bas = new ByteArraySpeichern();
+		if (bas.writeData(new String(txt).getBytes(), fileName))
+			System.out.println("'" + txt + "' erfolgreich als byte[] gespeichert");
+		String ergebnis = new String(bas.readData(fileName));
+		System.out.println("Aus Datei gelesen: '" + ergebnis + "'");
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 'Eine Eingabe' erfolgreich als byte[] gespeichert
+ * Aus Datei gelesen: 'Eine Eingabe'
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to execute shell command from Java" enabled="true" name="MyIO_ShellCommand">import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+/*
+ * In Java, you can use Runtime.getRuntime().exec to execute external shell command
+ */
+
+public class ShellCommand {
+
+	public static void main(String[] args) {
+
+		String output = new ShellCommand().executeCommand("ping -c 3 " + "google.com");
+
+		System.out.println(output);
+
+	}
+
+	private String executeCommand(String command) {
+
+		StringBuffer output = new StringBuffer();
+
+		Process p;
+		try {
+			p = Runtime.getRuntime().exec(command);
+			p.waitFor();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+			String line = "";
+			while ((line = reader.readLine()) != null) {
+				output.append(line + "\n");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return output.toString();
+
+	}
+
+}
+
+/*
+ * Example Output
+ * 
+ * PING google.com (216.58.213.206) 56(84) bytes of data.
+ * 64 bytes from 216.58.213.206 (216.58.213.206): icmp_seq=1 ttl=53 time=30.5 ms
+ * 64 bytes from 216.58.213.206 (216.58.213.206): icmp_seq=2 ttl=53 time=32.8 ms
+ * 64 bytes from 216.58.213.206 (216.58.213.206): icmp_seq=3 ttl=53 time=33.3 ms
+ * 
+ * --- google.com ping statistics ---
+ * 3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+ * rtt min/avg/max/mdev = 30.547/32.247/33.347/1.228 ms
+ */</template><template autoinsert="true" context="java" deleted="false" description=" A simple TCP-based server" enabled="true" name="MyIO_SimpleSocketListener">import java.io.IOException;
+import java.io.InputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+/*
+ * A simple server socket listener that listens to port number 8888, and prints
+ * whatever received to the console.
+ */
+
+public class SimpleSocketListener {
+
+	ServerSocket server;
+	int serverPort = 8888;
+
+	// Constructor to allocate a ServerSocket listening at the given port.
+	public SimpleSocketListener() {
+		try {
+			server = new ServerSocket(serverPort);
+			System.out.println("ServerSocket: " + server);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Start listening.
+	private void listen() {
+		while (true) { // run until you terminate the program
+			try {
+				// Wait for connection. Block until a connection is made.
+				Socket socket = server.accept();
+				System.out.println("Socket: " + socket);
+				InputStream in = socket.getInputStream();
+				int byteRead;
+				// Block until the client closes the connection (i.e., read() returns -1)
+				while ((byteRead = in.read()) != -1) {
+					System.out.print((char) byteRead);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		new SimpleSocketListener().listen(); // Start the server and listening
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * ServerSocket: ServerSocket[addr=0.0.0.0/0.0.0.0,localport=8888]
+ */</template><template autoinsert="true" context="java" deleted="false" description="In this example, we start a thread for each connection to perform IO operations." enabled="true" name="MyIO_SimpleThreadedSocketListener">import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+/*
+ * A simple server socket listener that listens to port number 8888, and prints
+ * whatever received to the console. It starts a thread for each connection to
+ * perform IO operations.
+ */
+
+public class SimpleThreadedSocketListener {
+
+	ServerSocket server;
+	int serverPort = 8888;
+
+	// Constructor to allocate a ServerSocket listening at the given port.
+	public SimpleThreadedSocketListener() {
+		try {
+			server = new ServerSocket(serverPort);
+			System.out.println("ServerSocket: " + server);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Start listening.
+	private void listen() {
+		while (true) { // run until you terminate the program
+			try {
+				// Wait for connection. Block until a connection is made.
+				Socket socket = server.accept();
+				System.out.println("Socket: " + socket);
+				// Start a new thread for each client to perform block-IO operations.
+				new ClientThread(socket).start();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		new SimpleThreadedSocketListener().listen();
+	}
+
+	// Fork out a thread for each connected client to perform block-IO
+	class ClientThread extends Thread {
+
+		Socket socket;
+
+		public ClientThread(Socket socket) {
+			this.socket = socket;
+		}
+
+		@Override
+		public void run() {
+			InputStream in;
+			try {
+				in = socket.getInputStream();
+				int byteRead;
+				// Block until the client closes the connection, results in read() returns -1
+				while ((byteRead = in.read()) != -1) {
+					System.out.print((char) byteRead);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * ServerSocket: ServerSocket[addr=0.0.0.0/0.0.0.0,localport=8888]
+ * Socket: Socket[addr=/127.0.0.1,port=57404,localport=8888]
+ * hi
+ * Socket: Socket[addr=/127.0.0.1,port=57406,localport=8888]
+ * huhu
+ * whatsupp
  */</template><template autoinsert="true" context="java" deleted="false" description="How to iterate through collection objects?" enabled="true" name="MyIterator_hasNext">import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16391,6 +17586,123 @@ public class MyCeilEx {
  * Ceiling value of -45.6: -45.0
  * Ceiling value of 72.1: 73.0
  * Ceiling value of 45.3: 46.0
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Compare BigDecimal movePointRight and scaleByPowerOfTen" enabled="true" name="MyMath_compareBigDecimalmovePoint">import java.math.BigDecimal;
+
+/*
+ * We would like to know how to compare BigDecimal movePointRight and scaleByPowerOfTen.
+ */
+
+public class Main {
+	public static void main(String... args) {
+		long base = 12345;
+		int scale = 4;
+
+		BigDecimal number = BigDecimal.valueOf(base, scale);
+		System.out.println(number);
+		BigDecimal pointRight = number.movePointRight(5);
+		System.out.println(pointRight + "; my scale is " + pointRight.scale());
+		BigDecimal scaleBy = number.scaleByPowerOfTen(5);
+		System.out.println(scaleBy + "; my scale is " + scaleBy.scale());
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 1.2345
+ * 123450; my scale is 0
+ * 1.2345E+5; my scale is -1
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Convert mathematical string to int" enabled="true" name="MyMath_convertMathematicalString2Int">import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
+/*
+ * We would like to know how to convert mathematical string to int.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		ScriptEngineManager manager = new ScriptEngineManager();
+		ScriptEngine engine = manager.getEngineByName("js");
+		engine.put("a", 1);
+		engine.put("b", 2);
+		try {
+			String expression = "(a + b) &gt; 2";
+			Object result = engine.eval(expression);
+			System.out.println(expression + " ? " + result);
+		} catch (ScriptException se) {
+			se.printStackTrace();
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * (a + b) &gt; 2 ? true
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Convert Plot polar function onto cartesian grid" enabled="true" name="MyMath_convertPolarFunctionCartesianGrid">import static java.lang.Math.PI;
+import static java.lang.Math.cos;
+import static java.lang.Math.log;
+import static java.lang.Math.round;
+import static java.lang.Math.sin;
+import static java.lang.Math.tan;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+/*
+ * We would like to know how to convert Plot polar function onto cartesian grid.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		final int width = 512;
+		final int height = 512;
+		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
+		Graphics g = img.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, width, height);
+		g.setColor(Color.white);
+		final double A = 8;
+		final double B = 0.5;
+		final double N = 4;
+		final double scale = 128;
+		final double zoom = 50;
+		final double step = 1 / scale;
+		Point last = null;
+		final Point origin = new Point(width / 2, height / 2);
+
+		for (double t = 0; t &lt;= 2 * PI; t += step) {
+			final double r = zoom * polarFunction(t, A, B, N);
+			final int x = (int) round(r * cos(t));
+			final int y = (int) round(r * sin(t));
+			Point next = new Point(x, y);
+			if (last != null) {
+				g.drawLine(origin.x + last.x, origin.y + last.y, origin.x + next.x, origin.y + next.y);
+			}
+			last = next;
+		}
+
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().add(new JLabel(new ImageIcon(img)));
+		frame.pack();
+		frame.setVisible(true);
+	}
+
+	public static double polarFunction(double t, double A, double B, double N) {
+		return A / log(B * tan(t / (2 * N)));
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * plotted Ellipse
  */</template><template autoinsert="true" context="java" deleted="false" description="Example for Math.copySign() method." enabled="true" name="MyMath_copySign">/*
  * Math.copySign() method returns the first argument with the sign
  * of the second argument.
@@ -16430,6 +17742,234 @@ public class MyCosEx {
  * Value of cos(90) is: -0.4480736161291702
  * Value of cos(45) is: 0.5253219888177297
  * Value of cos(30) is: 0.15425144988758405
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Create Calculator" enabled="true" name="MyMath_createCalculator">import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+/*
+ * We would like to know how to create Calculator.
+ */
+
+public class Main extends JFrame implements ActionListener {
+	JButton num1, num2, num3, num4, num5, num6, num7, num8, num9, num0, add, sub, div, mult, equalto, exit, point,
+			reset;
+	JTextField textField;
+	String s = "", ope = "";
+	int flag = 0;
+	double total1;
+	double first, second;
+
+	void total(double first, double second, String ope) {
+		String total;
+		if (ope.equalsIgnoreCase("+")) {
+			total1 = first + second;
+			total = Double.toString(total1);
+			textField.setText(total);
+		} else if (ope.equalsIgnoreCase("-")) {
+			total1 = first - second;
+			total = Double.toString(total1);
+			textField.setText(total);
+		} else if (ope.equalsIgnoreCase("*")) {
+			total1 = first * second;
+			total = Double.toString(total1);
+			textField.setText(total);
+		} else if (ope.equalsIgnoreCase("/")) {
+			total1 = first / second;
+			total = Double.toString(total1);
+			textField.setText(total);
+		}
+		clearfields();
+	}
+
+	public Main() {
+		Container content = getContentPane();
+		content.setLayout(new FlowLayout());
+		JLabel jl = new JLabel("          Calculator                ");
+		textField = new JTextField(15);
+		num1 = new JButton(" 1 ");
+		num2 = new JButton(" 2 ");
+		num3 = new JButton(" 3 ");
+		num4 = new JButton(" 4 ");
+		num5 = new JButton(" 5 ");
+		num6 = new JButton(" 6 ");
+		num7 = new JButton(" 7 ");
+		num8 = new JButton(" 8 ");
+		num9 = new JButton(" 9 ");
+		num0 = new JButton(" 0 ");
+		add = new JButton(" + ");
+		sub = new JButton("  -  ");
+		div = new JButton("  / ");
+		mult = new JButton(" *  ");
+		equalto = new JButton(" = ");
+		exit = new JButton("    Exit     ");
+		point = new JButton("  . ");
+		reset = new JButton("C");
+		reset.setBackground(Color.RED);
+		num1.addActionListener(this);
+		num2.addActionListener(this);
+		num3.addActionListener(this);
+		num4.addActionListener(this);
+		num5.addActionListener(this);
+		num6.addActionListener(this);
+		num7.addActionListener(this);
+		num8.addActionListener(this);
+		num9.addActionListener(this);
+		num0.addActionListener(this);
+		add.addActionListener(this);
+		sub.addActionListener(this);
+		mult.addActionListener(this);
+		div.addActionListener(this);
+		equalto.addActionListener(this);
+		exit.addActionListener(this);
+		point.addActionListener(this);
+		reset.addActionListener(this);
+		content.add(jl);
+		content.add(textField);
+		content.add(num1);
+		content.add(num2);
+		content.add(num3);
+		content.add(add);
+		content.add(num4);
+		content.add(num5);
+		content.add(num6);
+		content.add(sub);
+		content.add(num7);
+		content.add(num8);
+		content.add(num9);
+		content.add(div);
+		content.add(num0);
+		content.add(point);
+		content.add(mult);
+		content.add(equalto);
+		content.add(reset);
+		content.add(exit);
+	}
+
+	public static void main(String arg[]) {
+		Main jf = new Main();
+		jf.setSize(230, 250);
+		jf.setVisible(true);
+
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if (o == num1) {
+			textField.setText(s.concat("1"));
+			s = textField.getText();
+		} else if (o == num2) {
+			textField.setText(s.concat("2"));
+			s = textField.getText();
+		} else if (o == num3) {
+			textField.setText(s.concat("3"));
+			s = textField.getText();
+		} else if (o == num4) {
+			textField.setText(s.concat("4"));
+			s = textField.getText();
+		} else if (o == num5) {
+			textField.setText(s.concat("5"));
+			s = textField.getText();
+		} else if (o == num6) {
+			textField.setText(s.concat("6"));
+			s = textField.getText();
+		} else if (o == num7) {
+			textField.setText(s.concat("7"));
+			s = textField.getText();
+		} else if (o == num8) {
+			textField.setText(s.concat("8"));
+			s = textField.getText();
+		} else if (o == num9) {
+			textField.setText(s.concat("9"));
+			s = textField.getText();
+		} else if (o == num0) {
+			textField.setText(s.concat("0"));
+			s = textField.getText();
+		} else if (o == add) {
+
+			textField.setText("");
+			first = Double.parseDouble(s);
+			System.out.println(first);
+			s = "";
+			ope = "+";
+		} else if (o == sub) {
+			textField.setText("");
+			first = Double.parseDouble(s);
+			s = "";
+			ope = "-";
+		} else if (o == mult) {
+			textField.setText("");
+			first = Double.parseDouble(s);
+			s = "";
+			ope = "*";
+		} else if (o == div) {
+			textField.setText("");
+			first = Double.parseDouble(s);
+			s = "";
+			ope = "/";
+		} else if (o == equalto) {
+			if (flag == 0) {
+				second = Double.parseDouble(s);
+				total(first, second, ope);
+				flag = 1;
+			} else if (flag == 1) {
+				second = Double.parseDouble(s);
+				total(first, second, ope);
+			}
+			System.out.println(first);
+		} else if (o == exit) {
+			System.exit(0);
+		} else if (o == point) {
+			textField.setText(s.concat("."));
+			s = textField.getText();
+		}
+		if (o == reset) {
+			textField.setText("");
+			s = textField.getText();
+			total1 = 0;
+		}
+	}
+
+	private void clearfields() {
+		first = 0;
+		second = 0;
+		ope = "";
+		flag = 0;
+		total1 = 0;
+		s = "";
+	}
+}
+
+/*
+ * Example Output
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Evaluate math expressions in String" enabled="true" name="MyMath_evalMathExpString">import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
+/*
+ * We would like to know how to evaluate math expressions in String.
+ */
+
+public class Main {
+	public static void main(String[] args) throws Exception {
+		// create a script engine manager
+		ScriptEngineManager factory = new ScriptEngineManager();
+		// create a JavaScript engine
+		ScriptEngine engine = factory.getEngineByName("JavaScript");
+		// evaluate JavaScript code from String
+		Object obj = engine.eval("1+2");
+		System.out.println(obj);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 3
  */</template><template autoinsert="true" context="java" deleted="false" description="How to get exponential value of a number in java?" enabled="true" name="MyMath_exp">/*
  * Math.exp() method gives you the exponential value of the given number.
  * Below example shows how to get exponential value.
@@ -16659,7 +18199,524 @@ public class MyNextUpEx {
  * 
  * Next up value for 21.3 is: 21.300000000000004
  * Next up value for 29.2 is: 29.200000000000003
- */</template><template autoinsert="true" context="java" deleted="false" description="Example for Math.pow() method." enabled="true" name="MyMath_pow">Math.pow(${2}, ${3})</template><template autoinsert="true" context="java" deleted="false" description="How to get random number between 0 to 1 in java?" enabled="true" name="MyMath_random">/*
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Parse a mathematical expression and operators and solve it" enabled="true" name="MyMath_parseMathematicalExpOP">import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
+/*
+ * We would like to know how to parse a mathematical expression and operators and solve it.
+ */
+
+public class Main {
+	public static void main(String[] args) throws Exception {
+		String xyz = "3*3+3";
+		String kkk = "(100 % 6)* 7";
+		ScriptEngineManager manager = new ScriptEngineManager();
+		ScriptEngine se = manager.getEngineByName("JavaScript");
+		Object result1 = se.eval(xyz);
+		Object result2 = se.eval(kkk);
+		System.out.println("result1: " + result1);
+		System.out.println("result2: " + result2);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * result1: 12
+ * result2: 28
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Plot the sine and cosine functions" enabled="true" name="MyMath_plotSinCos">import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Polygon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+/*
+ * We would like to know how to plot the sine and cosine functions.
+ */
+
+public class Main extends JFrame {
+	public Main() {
+		setLayout(new BorderLayout());
+		add(new DrawSine(), BorderLayout.CENTER);
+	}
+
+	public static void main(String[] args) {
+		Main frame = new Main();
+		frame.setSize(400, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+}
+
+class DrawSine extends JPanel {
+	double f(double x) {
+		return Math.sin(x);
+	}
+
+	double gCos(double y) {
+		return Math.cos(y);
+	}
+
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+
+		g.drawLine(10, 100, 380, 100);
+		g.drawLine(200, 30, 200, 190);
+
+		g.drawLine(380, 100, 370, 90);
+		g.drawLine(380, 100, 370, 110);
+		g.drawLine(200, 30, 190, 40);
+		g.drawLine(200, 30, 210, 40);
+
+		g.drawString("X", 360, 80);
+		g.drawString("Y", 220, 40);
+
+		Polygon p = new Polygon();
+		Polygon p2 = new Polygon();
+
+		for (int x = -170; x &lt;= 170; x++) {
+			p.addPoint(x + 200, 100 - (int) (50 * f((x / 100.0) * 2 * Math.PI)));
+
+		}
+
+		for (int x = -170; x &lt;= 170; x++) {
+			p2.addPoint(x + 200, 100 - (int) (50 * gCos((x / 100.0) * 2 * Math.PI)));
+
+		}
+
+		g.setColor(Color.red);
+		g.drawPolyline(p.xpoints, p.ypoints, p.npoints);
+		g.drawString("-2\u03c0", 95, 115);
+		g.drawString("-\u03c0", 147, 115);
+		g.drawString("\u03c0", 253, 115);
+		g.drawString("2\u03c0", 305, 115);
+		g.drawString("0", 200, 115);
+
+		g.setColor(Color.blue);
+		g.drawPolyline(p2.xpoints, p2.ypoints, p2.npoints);
+
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * plotted Sin Cos Function
+ */</template><template autoinsert="true" context="java" deleted="false" description="Plot a Triangle with Polygon" enabled="true" name="MyMath_plotTrianglePolygon">import javafx.application.Application;
+import javafx.geometry.Point2D;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+/*
+ * Plot a Triangle
+ */
+
+public class Triangle extends Application {
+	@Override
+	public void start(Stage stage) {
+
+		int verschieb = 20;
+
+		int px1 = 50;
+		int py1 = 50;
+
+		int px2 = 150;
+		int py2 = 100;
+
+		int px3 = 75;
+		int py3 = 200;
+		Group root = new Group();
+		Scene scene = new Scene(root, 300, 300);
+		stage.setScene(scene);
+
+		Group g = new Group();
+
+		Polygon polygon = new Polygon();
+		polygon.getPoints().addAll(
+				new Double[] { (double) px1, (double) py1, (double) px2, (double) py2, (double) px3, (double) py3 });
+		polygon.setFill(Color.BLUE);
+
+		Text a = new Text(px1, py1, "A" + px1 + " " + py1);
+		Line ab = new Line(px1, py1 - verschieb, px2, py2 - verschieb);
+
+		Text b = new Text(px2, py2, "B" + px2 + " " + py2);
+		Line bc = new Line(px2 + verschieb, py2 + verschieb, px3 + verschieb, py3 + verschieb);
+
+		Text c = new Text(px3, py3, "C" + px3 + " " + py3);
+		Line ca = new Line(px3 - verschieb, py3 + verschieb, px1 - verschieb, py1 + verschieb);
+
+		g.getChildren().addAll(polygon, a, ab, b, bc, c, ca);
+
+		scene.setRoot(g);
+		stage.show();
+	}
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * plot Triangle
+ */</template><template autoinsert="true" context="java" deleted="false" description="Polynomial" enabled="true" name="MyMath_Polynomial">import java.util.Scanner;
+
+/*
+ * Polynomial
+ */
+
+public class Polynomial {
+
+	int degreeOfPolynomial;
+	double[] coefficients;
+
+	public Polynomial() {
+
+	}
+
+	public Polynomial(int degree) {
+		this.degreeOfPolynomial = degree;
+		this.coefficients = new double[degree + 1];
+
+		for (int loopingVariable = 0; loopingVariable &lt;= getDegree(); loopingVariable++) {
+			this.coefficients[loopingVariable] = 0;
+		}
+	}
+
+	public int getDegree() {
+		return degreeOfPolynomial;
+	}
+
+	public String toString() {
+
+		String polynomialExpression = "";
+		int counter = 0;
+
+		while (counter - 1 != getDegree()) {
+
+			if (counter == 0)
+				polynomialExpression += "+" + polynomialExpression + coefficients[0];
+			else
+				polynomialExpression = "+" + coefficients[counter] + "x^" + counter + polynomialExpression;
+
+			counter++;
+
+		}
+
+		return polynomialExpression;
+	}
+
+	public double evaluate(double x) {
+
+		double resultOfExpression = coefficients[0];
+
+		for (int loopVariable = 1; loopVariable &lt;= getDegree(); loopVariable++) {
+			resultOfExpression = resultOfExpression + coefficients[loopVariable] * Math.pow(x, loopVariable);
+		}
+
+		return resultOfExpression;
+	}
+
+	public static Polynomial add() {
+
+		Scanner scannerObject = new Scanner(System.in);
+
+		System.out.println("Enter degree of 1st polynomial");
+		int degree1 = scannerObject.nextInt();
+		System.out.println("Enter the degree of 2nd polynomial");
+		int degree2 = scannerObject.nextInt();
+
+		int smallerDegree = degree1 &lt; degree2 ? degree1 : degree2;
+
+		Polynomial objectForPolynomial1 = new Polynomial(degree1);
+		Polynomial objectForPolynomial2 = new Polynomial(degree2);
+		Polynomial objectForPolynomial3 = new Polynomial(smallerDegree);
+
+		System.out.println("Enter the values of coefficients for 1st polynomial");
+		for (int loopingVariable = 0; loopingVariable &lt;= degree1; loopingVariable++)
+			objectForPolynomial1.coefficients[loopingVariable] = scannerObject.nextInt();
+		System.out.println("Enter the values of coeffcients for 2nd polynomial");
+		for (int loopingVariable = 0; loopingVariable &lt;= degree2; loopingVariable++)
+			objectForPolynomial2.coefficients[loopingVariable] = scannerObject.nextInt();
+
+		for (int loopingVariable = 0; loopingVariable &lt;= smallerDegree; loopingVariable++) {
+			objectForPolynomial3.coefficients[loopingVariable] = objectForPolynomial1.coefficients[loopingVariable]
+					+ objectForPolynomial2.coefficients[loopingVariable];
+		}
+
+		return objectForPolynomial3;
+	}
+
+	public static Polynomial multiply() {
+
+		Scanner scannerObject = new Scanner(System.in);
+		int greaterDegree;
+		int smallerDegree;
+
+		System.out.println("Enter the degree of 1st polynomial");
+		int degree1 = scannerObject.nextInt();
+		System.out.println("Enter the degree of 2nd polynomial");
+		int degree2 = scannerObject.nextInt();
+
+		if (degree1 &gt; degree2) {
+			greaterDegree = degree1;
+			smallerDegree = degree2;
+		} else {
+			greaterDegree = degree2;
+			smallerDegree = degree1;
+		}
+
+		Polynomial objectForPolynomial1 = new Polynomial(greaterDegree);
+		Polynomial objectForPolynomial2 = new Polynomial(smallerDegree);
+		Polynomial objectForPolynomial3 = new Polynomial(greaterDegree + smallerDegree);
+
+		System.out.println("Enter the values of coefficients for 1st polynomial");
+		for (int loopingVariable = 0; loopingVariable &lt;= greaterDegree; loopingVariable++)
+			objectForPolynomial1.coefficients[loopingVariable] = scannerObject.nextInt();
+		System.out.println("Enter the values of coeffcients for 2nd polynomial");
+		for (int loopingVariable = 0; loopingVariable &lt;= smallerDegree; loopingVariable++)
+			objectForPolynomial2.coefficients[loopingVariable] = scannerObject.nextInt();
+
+		for (int loop1 = 0; loop1 &lt;= greaterDegree; loop1++) {
+			for (int loop2 = 0; loop2 &lt;= smallerDegree; loop2++) {
+				objectForPolynomial3.coefficients[loop1 + loop2] = objectForPolynomial1.coefficients[loop1]
+						* objectForPolynomial2.coefficients[loop2];
+			}
+		}
+
+		return objectForPolynomial3;
+	}
+
+	public static void main(String args[]) {
+
+		System.out.println("Testing add function");
+		Polynomial obj = add();
+		System.out.println(obj.coefficients[0]);
+
+		System.out.println("Testing multiply function");
+		obj.multiply();
+		System.out.println(obj.coefficients[0]);
+
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Testing add function
+ * Enter degree of 1st polynomial
+ */</template><template autoinsert="true" context="java" deleted="false" description="Performs a polynomial regression on an set of N data points" enabled="true" name="MyMath_PolynomialRegression">/*************************************************************************
+ *  Compilation:  javac -cp .:jama.jar PolynomialRegression.java
+ *  Execution:    java  -cp .:jama.jar PolynomialRegression
+ *  Dependencies: jama.jar StdOut.java
+ * 
+ *  % java -cp .:jama.jar PolynomialRegression
+ *  0.01 N^3 + -1.64 N^2 + 168.92 N + -2113.73 (R^2 = 0.997)
+ *
+ *************************************************************************/
+
+import Jama.Matrix;
+import Jama.QRDecomposition;
+
+/**
+ * The &lt;tt&gt;PolynomialRegression&lt;/tt&gt; class performs a polynomial regression on
+ * an set of &lt;em&gt;N&lt;/em&gt; data points (&lt;em&gt;y&lt;sub&gt;i&lt;/sub&gt;&lt;/em&gt;,
+ * &lt;em&gt;x&lt;sub&gt;i&lt;/sub&gt;&lt;/em&gt;). That is, it fits a polynomial &lt;em&gt;y&lt;/em&gt; =
+ * &amp;beta;&lt;sub&gt;0&lt;/sub&gt; + &amp;beta;&lt;sub&gt;1&lt;/sub&gt; &lt;em&gt;x&lt;/em&gt; + &amp;beta;&lt;sub&gt;2&lt;/sub&gt;
+ * &lt;em&gt;x&lt;/em&gt;&lt;sup&gt;2&lt;/sup&gt; + ... + &amp;beta;&lt;sub&gt;&lt;em&gt;d&lt;/em&gt;&lt;/sub&gt;
+ * &lt;em&gt;x&lt;/em&gt;&lt;sup&gt;&lt;em&gt;d&lt;/em&gt;&lt;/sup&gt; (where &lt;em&gt;y&lt;/em&gt; is the response variable,
+ * &lt;em&gt;x&lt;/em&gt; is the predictor variable, and the &amp;beta;&lt;sub&gt;&lt;em&gt;i&lt;/em&gt;&lt;/sub&gt; are
+ * the regression coefficients) that minimizes the sum of squared residuals of
+ * the multiple regression model. It also computes associated the coefficient of
+ * determination &lt;em&gt;R&lt;/em&gt;&lt;sup&gt;2&lt;/sup&gt;.
+ * &lt;p&gt;
+ * This implementation performs a QR-decomposition of the underlying Vandermonde
+ * matrix, so it is not the fastest or most numerically stable way to perform
+ * the polynomial regression.
+ *
+ * @author Robert Sedgewick
+ * @author Kevin Wayne
+ */
+public class PolynomialRegression {
+	private final int N; // number of observations
+	private final int degree; // degree of the polynomial regression
+	private final Matrix beta; // the polynomial regression coefficients
+	private double SSE; // sum of squares due to error
+	private double SST; // total sum of squares
+
+	/**
+	 * Performs a polynomial reggression on the data points &lt;tt&gt;(y[i], x[i])&lt;/tt&gt;.
+	 * 
+	 * @param x
+	 *            the values of the predictor variable
+	 * @param y
+	 *            the corresponding values of the response variable
+	 * @param degree
+	 *            the degree of the polynomial to fit
+	 * @throws java.lang.IllegalArgumentException
+	 *             if the lengths of the two arrays are not equal
+	 */
+	public PolynomialRegression(double[] x, double[] y, int degree) {
+		this.degree = degree;
+		N = x.length;
+
+		// build Vandermonde matrix
+		double[][] vandermonde = new double[N][degree + 1];
+		for (int i = 0; i &lt; N; i++) {
+			for (int j = 0; j &lt;= degree; j++) {
+				vandermonde[i][j] = Math.pow(x[i], j);
+			}
+		}
+		Matrix X = new Matrix(vandermonde);
+
+		// create matrix from vector
+		Matrix Y = new Matrix(y, N);
+
+		// find least squares solution
+		QRDecomposition qr = new QRDecomposition(X);
+		beta = qr.solve(Y);
+
+		// mean of y[] values
+		double sum = 0.0;
+		for (int i = 0; i &lt; N; i++)
+			sum += y[i];
+		double mean = sum / N;
+
+		// total variation to be accounted for
+		for (int i = 0; i &lt; N; i++) {
+			double dev = y[i] - mean;
+			SST += dev * dev;
+		}
+
+		// variation not accounted for
+		Matrix residuals = X.times(beta).minus(Y);
+		SSE = residuals.norm2() * residuals.norm2();
+	}
+
+	/**
+	 * Returns the &lt;tt&gt;j&lt;/tt&gt;th regression coefficient
+	 * 
+	 * @return the &lt;tt&gt;j&lt;/tt&gt;th regression coefficient
+	 */
+	public double beta(int j) {
+		return beta.get(j, 0);
+	}
+
+	/**
+	 * Returns the degree of the polynomial to fit
+	 * 
+	 * @return the degree of the polynomial to fit
+	 */
+	public int degree() {
+		return degree;
+	}
+
+	/**
+	 * Returns the coefficient of determination &lt;em&gt;R&lt;/em&gt;&lt;sup&gt;2&lt;/sup&gt;.
+	 * 
+	 * @return the coefficient of determination &lt;em&gt;R&lt;/em&gt;&lt;sup&gt;2&lt;/sup&gt;, which is a
+	 *         real number between 0 and 1
+	 */
+	public double R2() {
+		if (SST == 0.0)
+			return 1.0; // constant function
+		return 1.0 - SSE / SST;
+	}
+
+	/**
+	 * Returns the expected response &lt;tt&gt;y&lt;/tt&gt; given the value of the predictor
+	 * variable &lt;tt&gt;x&lt;/tt&gt;.
+	 * 
+	 * @param x
+	 *            the value of the predictor variable
+	 * @return the expected response &lt;tt&gt;y&lt;/tt&gt; given the value of the predictor
+	 *         variable &lt;tt&gt;x&lt;/tt&gt;
+	 */
+	public double predict(double x) {
+		// horner's method
+		double y = 0.0;
+		for (int j = degree; j &gt;= 0; j--)
+			y = beta(j) + (x * y);
+		return y;
+	}
+
+	/**
+	 * Returns a string representation of the polynomial regression model.
+	 * 
+	 * @return a string representation of the polynomial regression model, including
+	 *         the best-fit polynomial and the coefficient of determination
+	 *         &lt;em&gt;R&lt;/em&gt;&lt;sup&gt;2&lt;/sup&gt;
+	 */
+	public String toString() {
+		String s = "";
+		int j = degree;
+
+		// ignoring leading zero coefficients
+		while (j &gt;= 0 &amp;&amp; Math.abs(beta(j)) &lt; 1E-5)
+			j--;
+
+		// create remaining terms
+		for (j = j; j &gt;= 0; j--) {
+			if (j == 0)
+				s += String.format("%.2f ", beta(j));
+			else if (j == 1)
+				s += String.format("%.2f N + ", beta(j));
+			else
+				s += String.format("%.2f N^%d + ", beta(j), j);
+		}
+		return s + "  (R^2 = " + String.format("%.3f", R2()) + ")";
+	}
+
+	public static void main(String[] args) {
+		double[] x = { 10, 20, 40, 80, 160, 200 };
+		double[] y = { 100, 350, 1500, 6700, 20160, 40000 };
+		PolynomialRegression regression = new PolynomialRegression(x, y, 3);
+		System.out.println(regression);
+	}
+}</template><template autoinsert="true" context="java" deleted="false" description="Example for Math.pow() method." enabled="true" name="MyMath_pow">Math.pow(${2}, ${3})</template><template autoinsert="true" context="java" deleted="false" description="How to - Get the prime numbers" enabled="true" name="MyMath_PrimeNumbers">import java.math.BigInteger;
+
+/*
+ * We would like to know how to get the prime numbers.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		int i = 0;
+		while (true) {
+			if (i &gt; 1000000) {
+				break;
+			}
+			if (i &gt; 1) {
+				if (new BigInteger(i + "").isProbablePrime(i / 2)) {
+					System.out.println(i);
+				}
+			}
+			i++;
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 2
+ * 3
+ * 5
+ * 7
+ * 11
+ * 13
+ * 17
+ * 19
+ * 23
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to get random number between 0 to 1 in java?" enabled="true" name="MyMath_random">/*
  * Math.random() method returns a double value with a positive sign,
  * greater than or equal to 0.0 and less than 1.0.
 */
@@ -16680,6 +18737,35 @@ public class MyRandomEx {
  * Random number: 0.38874531973153403
  * Random number: 0.4359630896151976
  * Random number: 0.3891766218910018
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate random number with restrictions" enabled="true" name="MyMath_restrictedRandomNumber">import java.util.Random;
+
+/*
+ * We would like to know how to generate random number with restrictions.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		Random num = new Random();
+		int num0, num1, num2, num3, num4, num5, num6, num7;
+
+		num0 = num.nextInt(7) + 1;
+		num1 = num.nextInt(8);
+		num2 = num.nextInt(8);
+		num3 = num.nextInt(643) + 101;
+		num4 = num.nextInt(10);
+		num5 = num.nextInt(10);
+		num6 = num.nextInt(10);
+		num7 = num.nextInt(10);
+
+		String randnum = "A random phone number: ";
+		System.out.println(randnum + num0 + num1 + num2 + "-" + num3 + "-" + num4 + num5 + num6 + num7);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * A random phone number: 326-427-3921
  */</template><template autoinsert="true" context="java" deleted="false" description="Example for Math.rint() method." enabled="true" name="MyMath_rint">/*
  * Math.rint() method returns the double value that is closest in value
  * to the argument and is equal to a mathematical integer.
@@ -16721,6 +18807,94 @@ public class MyRoundEx {
  * 23.2 after rounding: 23
  * 16.8 after rounding: 17
  * 15.5 after rounding: 16
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Save decimal" enabled="true" name="MyMath_saveDecimal">import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+/*
+ * We would like to know how to save decimal.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		double operation = 890.0 / 1440.0;
+		BigDecimal big = new BigDecimal(operation);
+		big = big.setScale(4, RoundingMode.HALF_UP);
+		double d2 = big.doubleValue();
+		System.out.println(String.format("operation : %s", operation));
+		System.out.println(String.format("scaled : %s", d2));
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * operation : 0.6180555555555556
+ * scaled : 0.6181
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Find Angle from transform matrix" enabled="true" name="MyMath_searchAngleTransformMatrix">import java.awt.Point;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.util.Random;
+
+/*
+ * We would like to know how to find Angle from transform matrix.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		for (int i = 0; i &lt;= 180; i++) {
+			double angleRad = Math.toRadians(i);
+			AffineTransform at = createRandomTransform(angleRad);
+			double extractedAngleRad = extractAngle(at);
+			System.out.println("In: " + Math.toDegrees(angleRad) + " " + "Out " + Math.toDegrees(extractedAngleRad));
+		}
+	}
+
+	private static double extractAngle(AffineTransform at) {
+		Point2D p0 = new Point();
+		Point2D p1 = new Point(1, 0);
+		Point2D pp0 = at.transform(p0, null);
+		Point2D pp1 = at.transform(p1, null);
+		double dx = pp1.getX() - pp0.getX();
+		double dy = pp1.getY() - pp0.getY();
+		double angle = Math.atan2(dy, dx);
+		return angle;
+	}
+
+	private static AffineTransform createRandomTransform(double angleRad) {
+		AffineTransform at = new AffineTransform();
+		double scale = 1.0;
+		at.translate(randomDouble(), randomDouble());
+		scale = Math.abs(randomDouble());
+		at.scale(scale, scale);
+		at.rotate(angleRad);
+		at.translate(randomDouble(), randomDouble());
+		scale = Math.abs(randomDouble());
+		at.scale(scale, scale);
+		return at;
+	}
+
+	private static double randomDouble() {
+		Random random = new Random(0);
+		return -5.0 + random.nextDouble() * 10;
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * In: 0.0 Out 0.0
+ * In: 1.0 Out 1.000001673073134
+ * In: 2.0 Out 2.0000007970275067
+ * In: 3.0 Out 2.9999992440791297
+ * In: 4.0 Out 3.999999623720301
+ * In: 5.0 Out 4.999999204592738
+ * In: 6.0 Out 6.000003193340188
+ * In: 7.0 Out 6.999997910404141
+ * In: 8.0 Out 8.000000304358942
+ * In: 9.0 Out 9.000002934948457
+ * .
+ * .
+ * .
  */</template><template autoinsert="true" context="java" deleted="false" description="Example for Math.signum() method." enabled="true" name="MyMath_signum">/*
  * Math.signum() function returns zero if the passed argument is zero,
  * 1.0 if the passed argument is greater than zero, -1.0 if the passed
@@ -16783,6 +18957,32 @@ public class MySqrtEx {
  * Square root of 16 is: 4.0
  * Square root of 4.6 is: 2.1447610589527217
  * Square root of 21 is: 4.58257569495584
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Convert positive int to negative and negative to positive" enabled="true" name="MyMath_swapSign">/*
+ * We would like to know how to convert positive int to negative and negative to positive.
+ */
+
+public class Main {
+	public static void main(String[] args) throws java.lang.Exception {
+		int iPositive = 15;
+		int iNegative = (~(iPositive - 1));
+
+		System.out.println(iNegative);
+
+		iPositive = ~(iNegative - 1);
+		System.out.println(iPositive);
+
+		iNegative = 0;
+		iPositive = ~(iNegative - 1);
+		System.out.println(iPositive);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * -15
+ * 15
+ * 0
  */</template><template autoinsert="true" context="java" deleted="false" description="How to calculate trigonometric tangent of an angle in java?" enabled="true" name="MyMath_tan">/*
  * Math.tan() method returns the trigonometric tangent value of an angle.
 */
@@ -17004,6 +19204,324 @@ public class MyRelativeUrl {
  * Example Output
  * 
  * http://www.java2novice.com/java_thread_examples/
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Compute the area of a triangle using Heron's Formula" enabled="true" name="MyNumber_computeTriangleHeron">/*
+ * Compute the area of a triangle using Heron's Formula. Code and values from
+ * Prof W. Kahan and Joseph D. Darcy. See
+ * http://www.cs.berkeley.edu/~wkahan/JAVAhurt.pdf. Derived from listing in Rick
+ * Grehan's Java Pro article (October 1999). Simplified and reformatted by Ian
+ * Darwin.
+ */
+public class Main {
+	public static void main(String[] args) {
+		// Sides for triangle in float
+		float af, bf, cf;
+		float sf, areaf;
+
+		// Ditto in double
+		double ad, bd, cd;
+		double sd, aread;
+
+		// Area of triangle in float
+		af = 12345679.0f;
+		bf = 12345678.0f;
+		cf = 1.01233995f;
+
+		sf = (af + bf + cf) / 2.0f;
+		areaf = (float) Math.sqrt(sf * (sf - af) * (sf - bf) * (sf - cf));
+		System.out.println("Single precision: " + areaf);
+
+		// Area of triangle in double
+		ad = 12345679.0;
+		bd = 12345678.0;
+		cd = 1.01233995;
+
+		sd = (ad + bd + cd) / 2.0d;
+		aread = Math.sqrt(sd * (sd - ad) * (sd - bd) * (sd - cd));
+		System.out.println("Double precision: " + aread);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Single precision: 0.0
+ * Double precision: 972730.0557076167
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Create Fibonacci Numbers" enabled="true" name="MyNumber_Fibonacci">/*
+ * This program prints out the first 20 numbers in the Fibonacci sequence. Each
+ * term is formed by adding together the previous two terms in the sequence,
+ * starting with the terms 1 and 1.
+ */
+public class Main {
+	public static void main(String[] args) {
+		int n0 = 1, n1 = 1, n2; // Initialize variables
+		System.out.print(n0 + " " + // Print first and second terms
+				n1 + " "); // of the series
+
+		for (int i = 0; i &lt; 18; i++) { // Loop for the next 18 terms
+			n2 = n1 + n0; // Next term is sum of previous two
+			System.out.print(n2 + " "); // Print it out
+			n0 = n1; // First previous becomes 2nd previous
+			n1 = n2; // And current number becomes previous
+		}
+		System.out.println(); // Terminate the line
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Compute the Palindrome of a number by adding the number composed of" enabled="true" name="MyNumber_Palindrome">import java.math.BigInteger;
+
+/*
+ * Compute the Palindrome of a number by adding the number composed of its
+ * digits in reverse order, until a Palindrome occurs. e.g., 42-&gt;66 (42+24);
+ * 1951-&gt;5995 (1951+1591=3542; 3542+2453=5995).
+ * &lt;P&gt;
+ * TODO: Do we need to handle negative numbers?
+ * 
+ * @author Ian Darwin, http://www.darwinsys.com/
+ * @version Id: PalindromeBig.java,v 1.3 2004/02/09 03:33:57 ian Exp .
+ */
+
+public class Main {
+	public static boolean verbose = true;
+
+	public static void main(String[] argv) {
+		BigInteger l = new BigInteger("9999999");
+		System.out.println(findPalindrome(l));
+
+	}
+
+	/**
+	 * find a palindromic number given a starting point, by calling ourself until we
+	 * get a number that is palindromic.
+	 */
+	public static BigInteger findPalindrome(BigInteger num) {
+		if (num.compareTo(BigInteger.ZERO) &lt; 0)
+			throw new IllegalStateException("negative");
+		if (isPalindrome(num))
+			return num;
+		if (verbose)
+			System.out.println("Trying " + num);
+		return findPalindrome(num.add(reverseNumber(num)));
+	}
+
+	/** A ridiculously large number */
+	protected static final int MAX_DIGITS = 255;
+
+	/** Check if a number is palindromic. */
+	public static boolean isPalindrome(BigInteger num) {
+		String digits = num.toString();
+		int numDigits = digits.length();
+		if (numDigits &gt;= MAX_DIGITS) {
+			throw new IllegalStateException("too big");
+		}
+		// Consider any single digit to be as palindromic as can be
+		if (numDigits == 1)
+			return true;
+		for (int i = 0; i &lt; numDigits / 2; i++) {
+			// System.out.println(
+			// digits.charAt(i) + " ? " + digits.charAt(numDigits - i - 1));
+			if (digits.charAt(i) != digits.charAt(numDigits - i - 1))
+				return false;
+		}
+		return true;
+	}
+
+	static BigInteger reverseNumber(BigInteger num) {
+		String digits = num.toString();
+		int numDigits = digits.length();
+		char[] sb = new char[numDigits];
+		for (int i = 0; i &lt; digits.length(); i++) {
+			sb[i] = digits.charAt(numDigits - i - 1);
+		}
+		// Debug.println("rev",
+		// "reverseNumber(" + digits + ") -&gt; " + "\"" + sb + "\"");
+		return new BigInteger(new String(sb));
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 9999999
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Compute prime numbers" enabled="true" name="MyNumber_PrimeNumbers">/*
+ * We would like to know how to compute prime numbers.
+ */
+
+public class Main {
+	/** The default stopping point for primes */
+	public static final long DEFAULT_STOP = 4294967295L;
+	/** The first prime number */
+	public static final int FP = 2;
+
+	static int MAX = 100;
+
+	public static void main(String[] args) {
+		long[] prime = new long[MAX];
+
+		long stop = DEFAULT_STOP;
+		stop = 100;
+
+		prime[1] = FP; // P1 (ignore prime[0])
+		long n = FP + 1; // odd candidates
+		int j = 1; // numberFound
+
+		boolean isPrime = true; // for 3
+
+		do {
+
+			if (isPrime) {
+				if (j == MAX - 1) {
+					// Grow array dynamically if needed
+					long[] np = new long[MAX * 2];
+					System.arraycopy(prime, 0, np, 0, MAX);
+					MAX *= 2;
+					prime = np;
+				}
+				prime[++j] = n; // P2
+				isPrime = false;
+			}
+			n += 2; // P4
+
+			for (int k = 2; k &lt;= j &amp;&amp; k &lt; MAX; k++) { // P5, P6, P8
+				long q = n / prime[k];
+				long r = n % prime[k];
+				if (r == 0) {
+					break;
+				}
+				if (q &lt;= prime[k]) { // P7
+					isPrime = true;
+					break;
+				}
+			}
+
+		} while (n &lt; stop); // P3
+
+		for (int i = 1; i &lt;= j; i++)
+			System.out.println(prime[i]);
+	}
+}
+
+/*
+ * Example Output
+ * 2
+ * 3
+ * 5
+ * 7
+ * 11
+ * 13
+ * 17
+ * 19
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Java Number Example" enabled="true" name="MyNumber_PrimeNumEratosthenes">/*
+ * This program computes prime numbers using the Sieve of Eratosthenes
+ * algorithm: rule out multiples of all lower prime numbers, and anything
+ * remaining is a prime. It prints out the largest prime number less than or
+ * equal to the supplied command-line argument.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		// We will compute all primes less than the value specified on the
+		// command line, or, if no argument, all primes less than 100.
+		int max = 100; // Assign a default value
+		try {
+			max = Integer.parseInt(args[0]);
+		} // Parse user-supplied arg
+		catch (Exception e) {
+		} // Silently ignore exceptions.
+
+		// Create an array that specifies whether each number is prime or not.
+		boolean[] isprime = new boolean[max + 1];
+
+		// Assume that all numbers are primes, until proven otherwise.
+		for (int i = 0; i &lt;= max; i++)
+			isprime[i] = true;
+
+		// However, we know that 0 and 1 are not primes. Make a note of it.
+		isprime[0] = isprime[1] = false;
+
+		// To compute all primes less than max, we need to rule out
+		// multiples of all integers less than the square root of max.
+		int n = (int) Math.ceil(Math.sqrt(max)); // See java.lang.Math class
+
+		// Now, for each integer i from 0 to n:
+		// If i is a prime, then none of its multiples are primes,
+		// so indicate this in the array. If i is not a prime, then
+		// its multiples have already been ruled out by one of the
+		// prime factors of i, so we can skip this case.
+		for (int i = 0; i &lt;= n; i++) {
+			if (isprime[i]) // If i is a prime,
+				for (int j = 2 * i; j &lt;= max; j = j + i)
+					// loop through multiples
+					isprime[j] = false; // they are not prime.
+		}
+
+		// Now go look for the largest prime:
+		int largest;
+		for (largest = max; !isprime[largest]; largest--)
+			; // empty loop body
+
+		// Output the result
+		System.out.println("The largest prime less than or equal to " + max + " is " + largest);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * The largest prime less than or equal to 100 is 97
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Print a table of fahrenheit and celsius temperatures" enabled="true" name="MyNumber_printCelsiusFahrenheit">/*
+ * We would like to know how to print a table of fahrenheit and celsius temperatures 1.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		Main t = new Main();
+		t.start();
+		t.data();
+		t.end();
+	}
+
+	protected void start() {
+	}
+
+	protected void data() {
+		for (int i = -40; i &lt;= 120; i += 10) {
+			float c = (i - 32) * (5f / 9);
+			print(i, c);
+		}
+	}
+
+	protected void print(float f, float c) {
+		System.out.println(f + " " + c);
+	}
+
+	protected void end() {
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * -40.0 -40.0
+ * -30.0 -34.444447
+ * -20.0 -28.88889
+ * -10.0 -23.333334
+ * 0.0 -17.777779
+ * 10.0 -12.222223
+ * 20.0 -6.666667
+ * 30.0 -1.1111112
+ * 40.0 4.4444447
+ * 50.0 10.0
+ * 60.0 15.555556
+ * 70.0 21.111113
+ * 80.0 26.666668
+ * 90.0 32.222225
+ * 100.0 37.77778
+ * 110.0 43.333336
+ * 120.0 48.888893
  */</template><template autoinsert="true" context="java" deleted="false" description="How to get index of a sub list from another list?" enabled="true" name="Myollections_indexOfSubList">import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17676,7 +20194,402 @@ public class MyPropUsingClassName {
  * db.host: appdomain.java2novice.com
  * db.user: java2novice
  * db.password: mypassword
- */</template><template autoinsert="true" context="java" deleted="false" description="How to create and store property file dynamically?" enabled="true" name="MyProperties_savePropertyFile">import java.io.FileNotFoundException;
+ */</template><template autoinsert="true" context="java" deleted="false" description="Properties können mit Hilfe von Enumeration ausgegeben werden." enabled="true" name="MyProperties_out">import java.util.Enumeration;
+import java.util.Properties;
+
+/*
+ * Das Interface Enumeration deklariert zwei Methoden, die verwendet werden
+ * können, um Properties auszugeben.
+ */
+
+public class PropertiesAusgeben {
+
+	private Properties properties = new Properties();
+
+	public PropertiesAusgeben() {
+		properties.put("1", "eins");
+		properties.put("2", "zwei");
+	}
+
+	public void writeProperties(Properties properties) {
+		Enumeration&lt;?&gt; enu = properties.propertyNames();
+		while (enu.hasMoreElements()) {
+			String key = (String) enu.nextElement();
+			System.out.println(key + ": " + properties.getProperty(key));
+		}
+	}
+
+	private Properties getProperties() {
+		return properties;
+	}
+
+	public static void main(String[] args) {
+		PropertiesAusgeben pa = new PropertiesAusgeben();
+		pa.writeProperties(pa.getProperties());
+
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 2: zwei
+ * 1: eins
+ */</template><template autoinsert="true" context="java" deleted="false" description="Die Klasse ermöglicht die Verwaltung einer Properties-Datei" enabled="true" name="MyProperties_PropertiesManager">/*
+ * Die Klasse erm&amp;ouml;glicht die Verwaltung einer Properties-Datei, die z.B.
+ * zum Speichern von Programm-Optionen verwendet werden kann. Die Default-Werte
+ * werden als String-Array in der Klasse abgelegt. Sie werden als Felder deklariert und k&amp;ouml;nnen den eigenen
+ * Bed&amp;uuml;rfnissen angepasst werden:
+ * &lt;ul&gt;
+ * &lt;li&gt;rootPath = System.getProperty("user.home")&lt;/li&gt;
+ * &lt;li&gt;dirName = ".configDir"&lt;/li&gt;
+ * &lt;li&gt;fileName = "config"&lt;/li&gt;
+ * &lt;li&gt;header = ""&lt;/li&gt;
+ * &lt;li&gt;saveXML = true&lt;/li&gt;
+ * &lt;/ul&gt;
+ * 
+ */
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Properties;
+
+public class PropertiesManager {
+
+	/**
+	 * Pfad zum Ablageort des Konfigurationsverzeichnisses Standard:
+	 * Heimatverzeichnis des Users
+	 */
+	private String rootPath = System.getProperty("user.home");
+
+	/**
+	 * Verzeichnis, in dem die Speicherdatei abgelegt wird. Es wird im
+	 * Home-Verzeichnis des Users angelegt. Um das Verzeichnis direkt im
+	 * Home-Verzeichnis des Users abzulegen muss hier ein Leerstring ("") angegeben
+	 * werden. Unter Windows wird der f&amp;uum;hrende Punkt entfernt
+	 */
+	private String dirName = ".configDir";
+
+	/**
+	 * Dateiname der Properties-Dateiname Unter Windows wird ein evtl. f&amp;uum;hrender
+	 * Punkt entfernt
+	 */
+	private String fileName = "config";
+
+	/**
+	 * kompletter Pfad zur Konfigurationsdatei
+	 */
+	private String configFilePath;
+
+	/**
+	 * Kommentar-Header der Properties-Datei
+	 */
+	private final String header = "";
+
+	/**
+	 * Wenn true wird die Properties-Datei als *.xml angelegt ansonsten als
+	 * Plain-Text-Datei mit Paaren in der Form Key:Value
+	 */
+	private boolean saveXML = true;
+
+	/**
+	 * Default-Werte Key und Values werden hier als identische Strings abgespeichert
+	 * Wenn leer wird eine leere Speicherdatei angelegt
+	 */
+	private final String[] prop = { "eins" };
+
+	private Properties defaultProperties = new Properties();
+	private Properties properties;
+
+	public PropertiesManager() {
+		// Initialisierung der Default-Properties
+		loadDefaultProperties(prop);
+
+		// Als Default-Werte werden die Default-Properties geladen
+		properties = new Properties(defaultProperties);
+
+		if (!makeConfigFile()) {
+			System.out.println("Pfad der Speicherdatei ungueltig!");
+			return;
+		}
+		loadProperties();
+	}
+
+	/**
+	 * Legt den Pfad und die Konfigurationsdatei des Users an. Dies geschieht per
+	 * default im home-Verzeichnis des Users &amp;uuml;ber die Variable rootPath. Ist
+	 * rootPath leer, wird das Konfigurationsverzeichnis mit Datei in dem
+	 * Verzeichnis angelegt, aus dem heraus die Application gestartet wurde. Bei der
+	 * Neuanlage werden die Default-Werte der Properties gespeichert.
+	 * 
+	 * @return true wenn die Datei vorhanden ist oder angelegt werden konnte, sonst
+	 *         false
+	 */
+	private boolean makeConfigFile() {
+
+		// Abruch wenn Datei existiert
+		if (checkConfigPath())
+			return true;
+
+		File file = new File(configFilePath);
+		File dir = file.getParentFile();
+
+		// Falls Ablageverzeichnis nicht existiert, versuche es zu erstellen
+		if (!dir.isDirectory() &amp;&amp; !dir.mkdirs()) {
+			System.err.println(dir + " ist kein Verzeichnis und kann nicht erstellt werden!");
+			return false;
+		}
+
+		try {
+			// Falls nicht vorhanden Ablagedatei erstellen und
+			// Default-Properties speichern
+			if (file.createNewFile()) {
+				saveProperties(defaultProperties);
+				System.out.println(file + " erstellt.");
+				return true;
+			}
+		} catch (IOException e) {
+			System.err.println("Konfigurationsdatei konnte nicht angelegt werden.");
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	/**
+	 * pr&amp;uuml;ft den Pfad zur Properties-Datei auf seine Existenz und ob die Datei
+	 * beschrieben werden kann
+	 * 
+	 * @return true wenn die Konfigurationsdatei existiert und beschrieben werden
+	 *         kann, sonst false
+	 */
+	private boolean checkConfigPath() {
+		String dir = dirName;
+		String fs = System.getProperty("file.separator");
+
+		// Windows mag keine Dot-Files
+		if (System.getProperty("os.name").contains("Windows")) {
+			dir = dir.indexOf('.') == 0 ? dir.substring(1) : dir;
+			fileName = fileName.indexOf('.') == 0 ? fileName.substring(1) : fileName;
+		}
+
+		// wenn der Verzeichnisname nicht leer ist, '/' an Verzeichnisnamen
+		// haengen falls nicht vorhanden
+		dir = dir.lastIndexOf(fs) == dirName.length() || dirName.equals("") ? dir : dir + fs;
+
+		// wenn der Pfadname nicht leer ist, '/' an Pfadnamen haengen
+		// falls nicht vorhanden
+		rootPath = rootPath.lastIndexOf(fs) == rootPath.length() || rootPath.equals("") ? rootPath : rootPath + fs;
+
+		// Pfad endgueltig zusammensetzen
+		configFilePath = rootPath + dir + fileName;
+
+		File configFile = new File(configFilePath);
+
+		// Schreibrechte pruefen
+		if (configFile.isFile() &amp;&amp; configFile.canWrite())
+			return true;
+
+		return false;
+	}
+
+	/**
+	 * Speichert die Properties prop im eingestellten Verzeichnis Sind diese null
+	 * werden die bereits vorhandenen Properties gespeichert. Das Speichern kann je
+	 * nach Angabe des Feldes saveXML wahlweise als XML-Datei oder als
+	 * Plain-Text-Datei mit Key:Value-Paaren erfolgen.
+	 * 
+	 * @param prop
+	 *            das zu speichernde Properties-Objekt
+	 */
+	private void saveProperties(Properties prop) {
+		prop = prop == null ? properties : prop;
+
+		// Abbruch wenn falscher Pfad gesetzt ist
+		if (configFilePath == null || configFilePath.length() == 0) {
+			return;
+		}
+
+		FileOutputStream propOut = null;
+		try {
+			// Properties speichern
+			propOut = new FileOutputStream(new File(configFilePath));
+			properties.putAll(prop);
+			if (saveXML)
+				prop.storeToXML(propOut, header);
+			else
+				prop.store(propOut, header);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (propOut != null)
+					propOut.close();
+			} catch (IOException e) {
+			}
+		}
+	}
+
+	/**
+	 * Liest die Properties aus der zugeh&amp;ouml;rigen Datei. Wenn diese nicht lesbar
+	 * ist oder nicht existiert, wird versucht, diese anzulegen und mit den
+	 * Default-Werten zu belegen.
+	 */
+	private void loadProperties() {
+		File cf = new File(configFilePath);
+		if (cf.length() == 0) {
+			System.out.println("Properties k\u00F6nnen nicht geladen werden, " + cf
+					+ " ist leer.\nDefault Properties werden geladen.");
+			return;
+		}
+
+		Enumeration&lt;?&gt; propEnum = properties.propertyNames();
+		String prop;
+
+		// Properties aus Datei auslesen
+		if (cf.canRead() &amp;&amp; cf.isFile() &amp;&amp; cf.length() &gt; 0) {
+			FileInputStream propIn = null;
+			try {
+				propIn = new FileInputStream(configFilePath);
+				if (saveXML)
+					properties.loadFromXML(propIn);
+				else
+					properties.load(propIn);
+				// durchlaeuft die Keys der default Properties und prueft, ob
+				// diese in
+				// den ausgelesenen Properties belegt sind. Falls nicht wird ein
+				// Leerstring geladen.
+				while (propEnum.hasMoreElements()) {
+					prop = (String) propEnum.nextElement();
+					if (properties.getProperty(prop).equals("")) {
+						properties.setProperty(prop, defaultProperties.getProperty(prop));
+					}
+				}
+				// Wenn Auslesen erfolgreich Abbruch
+				return;
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (propIn != null)
+						propIn.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+		// falls Datei nicht existiert, versuche sie zu erstellen
+		makeConfigFile();
+	}
+
+	/**
+	 * Erzeugt aus den String-Angaben das Default-Properties-Objekt. Es wird beim
+	 * Erzeugen der Properties-Arbeitsversion als Parameter &amp;uuml;bergeben.
+	 * 
+	 * @param s
+	 *            String[], das Array der Keys/Values. Die Values werden unter dem
+	 *            gleichnamigen Key gespeichert.
+	 */
+	private void loadDefaultProperties(String[] s) {
+		loadDefaultProperties(s, s);
+	}
+
+	/**
+	 * Setzt die Default-Properties mit Hilfe zweier Arrays Die Methode kann
+	 * verwendet werden um zur Laufzeit die Default-Werte der Properties zu
+	 * &amp;auml;ndern
+	 * 
+	 * @param keys
+	 * @param values
+	 */
+	public void loadDefaultProperties(Object[] keys, Object[] values) {
+		if (keys.length != values.length) {
+			System.err.println("Keys und Values der Default-Arrays sind ungleich lang.");
+			return;
+		}
+		String key, value;
+		for (int i = 0; i &lt; keys.length; i++) {
+			key = keys[i].toString();
+			value = values[i].toString();
+			defaultProperties.put(key, value);
+		}
+	}
+
+	/**
+	 * Setzt den Wert value zur Eigenschaft key der Properties. Wenn keine
+	 * Properties gesetzt sind, werden die Default-Properties geladen und
+	 * anschliessend der Wert value an der Position key &amp;uuml;berschrieben. Die
+	 * Default-Properties bleiben grunds&amp;auml;tzlich unber&amp;uuml;hrt.
+	 * 
+	 * @param key
+	 *            String der Schl&amp;uuml;ssel, unter dem value gespeichert wird
+	 * @param value
+	 *            String der Wert, der unter key gespeichert wird
+	 */
+	public void setProperty(String key, String value) {
+		if (properties == null)
+			properties = defaultProperties;
+		properties.setProperty(key, value);
+		saveProperties(properties);
+	}
+
+	/**
+	 * Liefert den Wert der zu key geh&amp;ouml;renden Eigenschaft
+	 * 
+	 * @param key
+	 *            Schl&amp;uuml;ssel der gefragten Eigenschaft
+	 * @return String, der Wert der gefragten Eigenschaft
+	 */
+	public String getProperty(String key) {
+		if (properties == null)
+			properties = defaultProperties;
+		return properties.getProperty(key);
+	}
+
+	/**
+	 * Gibt das aktuelle Properties-Objekt zur&amp;uuml;ck. Wenn dies null ist, werden
+	 * die Default-Properties zur&amp;uuml;ck gegeben.
+	 * 
+	 * @return das aktuelle Properties-Objekt
+	 */
+	public Properties getProperties() {
+		return properties;
+	}
+
+	/**
+	 * Hier besteht die M&amp;ouml;glichkeit, auch von ausserhalb der Klasse die
+	 * Default-Werte einzusehen und zu manipulieren, etwa f&amp;uuml;r Vergleiche, etc.
+	 * 
+	 * @return das Properties-Objekt der Default-Properties
+	 */
+	public Properties getDefaultProperties() {
+		return defaultProperties;
+	}
+
+	/**
+	 * Druckt die eingetragenen Properties zeilenweise aus
+	 */
+	public void printProperties() {
+		Enumeration&lt;?&gt; e = getProperties().propertyNames();
+		while (e.hasMoreElements()) {
+			String s = (String) e.nextElement();
+			System.out.println(s + ": " + getProperty(s));
+		}
+	}
+
+	public static void main(String[] args) {
+		PropertiesManager pm = new PropertiesManager();
+		pm.printProperties();
+		pm.setProperty("eins", "sechs");
+		pm.printProperties();
+	}
+}</template><template autoinsert="true" context="java" deleted="false" description="How to create and store property file dynamically?" enabled="true" name="MyProperties_savePropertyFile">import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17868,7 +20781,446 @@ public class MyStringRandomGen {
  * k2IjvaRW9V
  * D58n72CckO
  * SKwXThlfkP
- */</template><template autoinsert="true" context="java" deleted="false" description="How to generate same random number sequence everytime?" enabled="true" name="MyRandom_generateSequence">import java.util.Random;
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Divide a number into smaller random ints" enabled="true" name="MyRandom_divideSmallInt">import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Random;
+
+/*
+ * We would like to know how to divide a number into smaller random ints.
+ */
+
+public class Main {
+	public static Random r = new Random();
+
+	public static int[] divide(int number, int number_of_parts) {
+		HashSet&lt;Integer&gt; uniqueInts = new HashSet&lt;Integer&gt;();
+		uniqueInts.add(0);
+		uniqueInts.add(number);
+		int array_size = number_of_parts + 1;
+		while (uniqueInts.size() &lt; array_size) {
+			uniqueInts.add(1 + r.nextInt(number - 1));
+		}
+		Integer[] dividers = uniqueInts.toArray(new Integer[array_size]);
+		Arrays.sort(dividers);
+		int[] results = new int[number_of_parts];
+		for (int i = 1, j = 0; i &lt; dividers.length; ++i, ++j) {
+			results[j] = dividers[i] - dividers[j];
+		}
+		return results;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(Arrays.toString(divide(12, 5)));
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * [3, 1, 4, 2, 2]
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Draw random color" enabled="true" name="MyRandom_drawColor">import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+/*
+ * We would like to know how to draw random color.
+ */
+
+public class Main extends JFrame {
+	int grid = 20;
+	int pnlCnt = grid * grid;
+	JFrame frame = new JFrame();
+	JPanel[] panels = new JPanel[pnlCnt];
+	Timer t;
+
+	public Main() {
+		for (int i = 0; i &lt; panels.length; i++) {
+			final String[] labels = new String[] { "0", "1" };
+			final Random rand = new Random();
+			int index = rand.nextInt(labels.length);
+			String randomTitle = labels[index];
+			final JLabel label = new JLabel(randomTitle, JLabel.CENTER);
+			Timer lblt = new Timer(00, new ActionListener() {
+				public void actionPerformed(ActionEvent ae) {
+					label.setText(labels[rand.nextInt(labels.length)]);
+				}
+			});
+			lblt.setRepeats(true);
+			lblt.start();
+			label.setForeground(Color.green);
+			label.setVerticalAlignment(JLabel.CENTER);
+			panels[i] = new JPanel();
+			panels[i].setBackground(Color.BLACK);
+			panels[i].add(label);
+			frame.getContentPane().add(panels[i]);
+		}
+		frame.setLayout(new GridLayout(grid, grid));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+		frame.setUndecorated(true);
+		frame.setVisible(true);
+
+		ActionListener action = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i &lt; panels.length; i++) {
+					Color mix = new Color(255, 255, 255);
+					Random random = new Random();
+					int r = random.nextInt(255);
+					int g = random.nextInt(255);
+					int b = random.nextInt(255);
+
+					if (mix != null) {
+						r = (r + mix.getRed()) / 2;
+						g = (g + mix.getGreen()) / 2;
+						b = (b + mix.getBlue()) / 2;
+					}
+					Color color = new Color(r, g, b);
+					panels[i].setBackground(color);
+				}
+			}
+		};
+
+		t = new Timer(00, action);
+		t.setRepeats(true);
+		t.start();
+	}
+
+	public static void main(String args[]) {
+		new Main();
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * draw random color on Screen
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate random float number within -1 and 1" enabled="true" name="MyRandom_FloatRangeAlternateOne">/*
+ * We would like to know how to generate random float number within -1 and 1.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		Random random = new Random();
+		for (int i = 0; i &lt; 1000000000; i++) {
+			float f = random.nextFloat() * 2 - 1;
+			if (Float.isNaN(f)) {
+				System.out.println("NaN!");
+			}
+			System.out.println(f);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 0.96808386
+ * 0.39129448
+ * -0.4998139
+ * -0.5562042
+ * -0.98529994
+ * 0.727556
+ * 0.7583866
+ * -0.46450174
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate 100 random 3 digit numbers" enabled="true" name="MyRandom_gen100Digit3">import java.util.Random;
+
+/*
+ * We would like to know how to generate 100 random 3 digit numbers.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		Random rand = new Random();
+		for (int i = 1; i &lt;= 100; i++) {
+			int randomNum = rand.nextInt((999 - 100) + 1) + 100;
+			System.out.println(randomNum);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 593
+ * 692
+ * 887
+ * 646
+ * 540
+ * 870
+ * 634
+ * 352
+ * 823
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate a random -1 or 1" enabled="true" name="MyRandom_genAlternateOne">import java.util.Random;
+
+/*
+ * We would like to know how to generate a random -1 or 1.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		for (int i = 0; i &lt; 100; i++) {
+			System.out.println(randomOneOrMinusOne());
+		}
+	}
+
+	static int randomOneOrMinusOne() {
+		Random rand = new Random();
+		if (rand.nextBoolean())
+			return 1;
+		else
+			return -1;
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * -1
+ * 1
+ * -1
+ * -1
+ * -1
+ * -1
+ * -1
+ * 1
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate a random number from an array" enabled="true" name="MyRandom_genArray">import java.util.Random;
+
+/*
+ * We would like to know how to generate a random number from an array.
+ */
+
+public class Main {
+	public static void main(String... args) {
+		int[] data = new int[] { 1, 2, 2, 2, 3, 3, 4, 5, 5, 5, 5, 5, 5 };
+		System.out.print(data[new Random().nextInt(data.length)]);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 4
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate a random BigInteger value" enabled="true" name="MyRandom_genBigInteger">import java.math.BigInteger;
+import java.util.Random;
+
+/*
+ * We would like to know how to generate a random BigInteger value.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		BigInteger bigInteger = new BigInteger("2000000000000");// uper limit
+		BigInteger min = new BigInteger("1000000000");// lower limit
+		BigInteger bigInteger1 = bigInteger.subtract(min);
+		Random rnd = new Random();
+		int maxNumBitLength = bigInteger.bitLength();
+
+		BigInteger aRandomBigInt;
+
+		aRandomBigInt = new BigInteger(maxNumBitLength, rnd);
+		if (aRandomBigInt.compareTo(min) &lt; 0)
+			aRandomBigInt = aRandomBigInt.add(min);
+		if (aRandomBigInt.compareTo(bigInteger) &gt;= 0)
+			aRandomBigInt = aRandomBigInt.mod(bigInteger1).add(min);
+
+		System.out.println(aRandomBigInt);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 468875084385
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Get random boolean" enabled="true" name="MyRandom_genBoolean">import java.util.Random;
+
+/*
+ * We would like to know how to get random boolean.
+ */
+
+public class Main {
+	public static final void main(String... args) {
+		Random randomGenerator = new Random();
+		for (int idx = 1; idx &lt;= 10; ++idx) {
+			boolean randomBool = randomGenerator.nextBoolean();
+			System.out.println("Generated : " + randomBool);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Generated : false
+ * Generated : true
+ * Generated : true
+ * Generated : false
+ * Generated : true
+ * Generated : false
+ * Generated : false
+ * Generated : false
+ * Generated : false
+ * Generated : true
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate a random number between multiple ranges" enabled="true" name="MyRandom_genMultipleRanges">import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+/*
+ * We would like to know how to generate a random number between multiple ranges.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		RandomInRanges rir = new RandomInRanges(1, 10);
+		rir.addRange(50, 60);
+		System.out.println(rir.getRandom());
+	}
+}
+
+class RandomInRanges {
+	private final List&lt;Integer&gt; range = new ArrayList&lt;Integer&gt;();
+
+	RandomInRanges(int min, int max) {
+		this.addRange(min, max);
+	}
+
+	final void addRange(int min, int max) {
+		for (int i = min; i &lt;= max; i++) {
+			this.range.add(i);
+		}
+	}
+
+	int getRandom() {
+		return this.range.get(new Random().nextInt(this.range.size()));
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 57
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate random numbers String" enabled="true" name="MyRandom_genNumbersString">/*
+ * We would like to know how to generate random numbers String.
+ */
+
+public class Main {
+	static char digits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+	public static char randomDecimalDigit() {
+		return digits[(int) Math.floor(Math.random() * 10)];
+	}
+
+	public static String randomDecimalString(int ndigits) {
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i &lt; ndigits; i++) {
+			result.append(randomDecimalDigit());
+		}
+		return result.toString();
+	}
+
+	public static void main(String[] args) {
+		System.out.println(randomDecimalString(24));
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 342362201378234972613133
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate Password" enabled="true" name="MyRandom_genPassword">import java.util.Random;
+
+/*
+ * We would like to know how to generate Password.
+ */
+
+public class Main {
+	public static String generatePassword() {
+		Random r[] = new Random[8];
+		r[0] = new Random();
+		r[1] = new Random();
+		r[2] = new Random();
+		r[3] = new Random();
+		r[4] = new Random();
+		r[5] = new Random();
+		r[6] = new Random();
+		r[7] = new Random();
+		Random x = new Random();
+		StringBuilder password = new StringBuilder();
+		int length = 6;
+		password.setLength(length);
+		for (int i = 0; i &lt; length; i++) {
+			x.setSeed(r[i % 8].nextInt(500) * r[4].nextInt(900));
+			password.setCharAt(i, (char) (r[x.nextInt(256) % 8].nextInt(95) + 32));
+		}
+		return password.toString();
+	}
+
+	public static void main(String[] args) {
+		System.out.println(generatePassword());
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * ~522w7
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Create random name generator" enabled="true" name="MyRandom_genRandomName">import java.util.Random;
+
+/*
+ * We would like to know how to create random name generator.
+ */
+
+public class Main {
+	public static void main(String args[]) {
+		Random rnd = new Random();
+		String firstname = "James";
+		String lastname = "Bond";
+
+		String result;
+
+		result = Character.toString(firstname.charAt(0)); // First char
+		if (lastname.length() &gt; 5)
+			result += lastname.substring(0, 5);
+		else
+			result += lastname;
+		result += Integer.toString(rnd.nextInt(99));
+		System.out.println(result);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * JBond43
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate Random numbers in a range" enabled="true" name="MyRandom_genRange">import java.util.Random;
+
+/*
+ * We would like to know how to generate Random numbers in a range.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		int randomNumberBetween1To100 = getRandom(0, 100);
+		System.out.println("Random number between 1 to 100 is: " + randomNumberBetween1To100);
+	}
+
+	public static int getRandom(int minNumber, int maxNumber) {
+		Random rand = new Random();
+		int randomNum = rand.nextInt(maxNumber - minNumber);
+		return randomNum;
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Random number between 1 to 100 is: 40
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to generate same random number sequence everytime?" enabled="true" name="MyRandom_genSequence">import java.util.Random;
 
 /*
  * Some times we need to generate same random number sequence everytime we call the
@@ -17917,6 +21269,87 @@ public class MySameSequenceWithRange {
  * 37
  * 63
  * 96
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate two seperate outputs using Random" enabled="true" name="MyRandom_genTwoOutputs">import java.util.Random;
+
+/*
+ * We would like to know how to generate two seperate outputs using Random.
+ */
+
+public class Main {
+	private static final Random rand = new Random();
+
+	public static void main(String[] args) {
+		int i = 1;
+		while (i &lt;= 100) {
+			System.out.printf("%-5d", rand.nextInt(4) + 4);
+			if (i % 10 == 0) {
+				System.out.println();
+			}
+			i++;
+		}
+		System.out.println();
+		i = 1;// modified here
+		while (i &lt;= 100) {
+			System.out.printf("%-5d", rand.nextInt(10 * (80) + 10));
+			if (i % 10 == 0) {
+				System.out.println();
+			}
+			i++;
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 4    6    5    7    6    4    5    6    6    6    
+ * 5    6    6    6    6    5    5    7    5    5    
+ * 6    7    7    4    6    7    7    7    6    5    
+ * 5    7    7    6    5    5    5    5    7    7    
+ * 6    4    6    4    6    6    6    6    4    5    
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate Random Number Between Two Given Values" enabled="true" name="MyRandom_genTwoValues">/*
+ * We would like to know how to generate Random Number Between Two Given Values.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		int n1 = 1;
+		int n2 = 100;
+		double Random;
+
+		Random = n2 + (Math.random() * (n1 - n2));
+		System.out.println("Your random number is: " + Random);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Your random number is: 87.51370287327944
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate very large random numbers" enabled="true" name="MyRandom_genVeryLargeBigInteger">import java.math.BigInteger;
+import java.util.Random;
+
+/*
+ * We would like to know how to generate very large random numbers.
+ */
+
+public class Main {
+	public static void main(String... a) {
+		int n = 16;
+
+		Random r = new Random();
+		byte[] b = new byte[n];
+		r.nextBytes(b);
+		BigInteger i = new BigInteger(b);
+
+		System.out.println(i);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 136368966114714697532032805720807559164
  */</template><template autoinsert="true" context="java" deleted="false" description="How to generate random numbers in the given range?" enabled="true" name="MyRandom_inRange">import java.util.Random;
 
 /*
@@ -17962,6 +21395,125 @@ public class MyRandomInRange {
  * 49
  * 23
  * 10
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Get random letters" enabled="true" name="MyRandom_Letters">import java.util.Random;
+
+/*
+ * We would like to know how to get random letters.
+ */
+
+public class Main {
+	static Random r = new Random();
+
+	static char pickRandom(char... letters) {
+		return letters[r.nextInt(letters.length)];
+	}
+
+	public static void main(String args[]) {
+		for (int i = 0; i &lt; 10; i++) {
+			System.out.println("" + pickRandom("ACEGIKMOQSUWY".toCharArray()) + pickRandom("BDFHJLNPRVXZ".toCharArray())
+					+ pickRandom("ABCDEFGHJKLMOPQRSTVWXYZ".toCharArray()));
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * MFO
+ * MZP
+ * CDX
+ * ILB
+ * CRH
+ * MRP
+ * IDK
+ * WZV
+ * WBF
+ * KLJ
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate random values that not repeat" enabled="true" name="MyRandom_NoRepeat">import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+/*
+ * We would like to know how to generate random values that not repeat.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		Random random = new Random();
+		Set&lt;Integer&gt; set = new HashSet&lt;Integer&gt;();
+		while (set.size() &lt; 5) {
+			set.add(random.nextInt());
+		}
+		List&lt;Integer&gt; result = new ArrayList&lt;Integer&gt;(set);
+		System.out.println(result);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * [1056161361, -1623890042, 844891179, 2024091596, 24993062]
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Random Roll Dice" enabled="true" name="MyRandom_rollDice">import java.util.Random;
+
+/*
+ * We would like to know how to random Roll Dice.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		System.out.println("Total is: " + Dice.rollDice(3, 6));
+	}
+}
+
+class Dice {
+	public static int rollDice(int number, int nSides) {
+		int num = 0;
+		int roll = 0;
+		Random r = new Random();
+		if (nSides &gt;= 3) {
+			for (int i = 0; i &lt; number; i++) {
+				roll = r.nextInt(nSides) + 1;
+				System.out.println("Roll is:  " + roll);
+				num = num + roll;
+			}
+		} else {
+			System.out.println("Error num needs to be from 3");
+		}
+		return num;
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Roll is:  5
+ * Roll is:  6
+ * Roll is:  4
+ * Total is: 15
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Generate random with strings" enabled="true" name="MyRandom_selectString">import java.util.Random;
+
+/*
+ * We would like to know how to generate random with strings.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+
+		String[] arr = { "A", "B", "C", "D" };
+		Random random = new Random();
+
+		int select = random.nextInt(arr.length);
+
+		System.out.println("Random String selected: " + arr[select]);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Random String selected: D
  */</template><template autoinsert="true" context="java" deleted="false" description="How to change Random class seed value?" enabled="true" name="MyRandom_setSeed">import java.util.Random;
 
 /*
@@ -18456,6 +22008,599 @@ public class MyUsernameValidate {
  * Is 'JAVA2NOVICE' a valid user name? false
  * Is 'java.2.novice' a valid user name? false
  * Is 'java_2-novice' a valid user name? true
+ */</template><template autoinsert="true" context="java" deleted="false" description="Die Interpolationssuche ist eine Modifikation der binären Suche, bei der die durchsuchten Abschnitte dynamisch gewählt werden." enabled="true" name="MySearchAlgo_InterpolationSearch">import java.util.Arrays;
+
+/*
+ * Die Interpolationssuche ist genau genommen lediglich eine Modifikation der
+ * binären Suche, bei der die Unterteilung in Suchabschnitte nicht in der Mitte
+ * des Suchbereichs erfolgt, sondern dynamisch gesetzt wird, je nach der Größe
+ * des gesuchten Wertes. Ist er hoch, wird er weiter hinten angenommen, ist er
+ * niedrig wird er eher weiter vorne vermutet.
+ * Voraussetzung hierzu ist ein sortiertes Array mit wahlfreiem Zugriff. 
+ */
+
+public class InterpolationSearch {
+
+	public void search(int[] intArr, int anfang, int ende, int zahl) {
+
+		int bereich = intArr[ende] - intArr[anfang];
+		int grenze = anfang + (int) (((double) ende - anfang) * (zahl - intArr[anfang]) / bereich);
+
+		if (intArr.length == 0) {
+			System.out.println("Array leer.");
+			return;
+		}
+
+		if (grenze &gt;= intArr.length) {
+			System.out.println(zahl + " nicht im Array enthalten.");
+			return;
+		}
+		System.out.println("Anfang: " + anfang + ", Ende: " + ende + ", Grenze: " + grenze);
+		if (zahl &gt; intArr[grenze]) {
+			search(intArr, grenze + 1, ende, zahl);
+		} else if (zahl &lt; intArr[grenze] &amp;&amp; anfang != grenze) {
+			search(intArr, anfang, grenze - 1, zahl);
+		} else if (zahl == intArr[grenze]) {
+			System.out.println(zahl + " an Position " + grenze + " des Arrays enthalten.");
+		} else {
+			System.out.println(zahl + " nicht im Array enthalten.");
+		}
+	}
+
+	public static void main(String[] args) {
+		int[] testArr = { 5, 3, 5, 228, 14, 69, 18, 27, 109, 85 };
+		Arrays.sort(testArr);
+		InterpolationSearch is = new InterpolationSearch();
+		is.search(testArr, 6, testArr.length - 1, 14);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Anfang: 6, Ende: 9, Grenze: 5
+ * Anfang: 6, Ende: 4, Grenze: 4
+ * Anfang: 6, Ende: 3, Grenze: 3
+ * 14 an Position 3 des Arrays enthalten.
+ */</template><template autoinsert="true" context="java" deleted="false" description="Bubblesort ist ein auf Vergleichen beruhender Algorithmus, der eine Liste durch Tausch benachbarter Elemente sortiert." enabled="true" name="MySortAlg_Bubblesort">/*
+ * Ein Array wird von vorne nach hinten durchlaufen. Hierbei wird geprüft,
+ * ob das jeweilige Element kleiner als sein Nachfolgeelement ist. Ist dies
+ * der Fall wird die Schleife fortgesetzt. Falls nicht, so werden das aktuelle
+ * Element und sein Nachfolger getauscht, sodass das kleinere Element nun vor
+ * dem größeren liegt. Durch rekursiven Aufruf der Methode wird der
+ * Schleifendurchlauf erneut gestartet bis eine aufsteigende Sortierung vorliegt.
+ */
+
+public class Bubblesort {
+
+	public int[] intArr = { 16, 23, 14, 7, 21, 20, 6, 1, 17, 13, 12, 9, 3, 19 };
+
+	public int[] sort() {
+		int k;
+		for (int i = 0; i &lt; intArr.length - 1; i++) {
+			if (intArr[i] &lt; intArr[i + 1]) {
+				continue;
+			}
+			k = intArr[i];
+			intArr[i] = intArr[i + 1];
+			intArr[i + 1] = k;
+			sort();
+		}
+		return intArr;
+	}
+
+	public static void main(String[] args) {
+		Bubblesort bs = new Bubblesort();
+		int[] arr = bs.sort();
+		for (int i = 0; i &lt; arr.length; i++) {
+			System.out.println(i + 1 + ": " + arr[i]);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 1: 1
+ * 2: 3
+ * 3: 6
+ * 4: 7
+ * 5: 9
+ * 6: 12
+ * 7: 13
+ * 8: 14
+ * 9: 16
+ * 10: 17
+ * 11: 19
+ * 12: 20
+ * 13: 21
+ * 14: 23
+ */</template><template autoinsert="true" context="java" deleted="false" description="Insertsort ist ein Algorithmus, der auf dem Tausch von Werten beruht." enabled="true" name="MySortAlg_Insertsort">/*
+ * Ein Array wird von vorne nach hinten durchlaufen. Bei jedem Durchlauf wird das
+ * Array wiederum in der entgegengesetzten Richtung, von hinten nach vorne
+ * durchlaufen. Ist der Wert eines niedrigeren Elementes höher als derjenige eines
+ * höheren Elementes, werden beide Elemente getauscht. Nach Durchlauf der äußeren
+ * Schleife sind alle Werte überprüft worden und das Array ist aufsteigend sortiert.
+ */
+
+public class Insertsort {
+
+	public int[] intArr = { 16, 23, 14, 7, 21, 20, 6, 1, 17, 13, 12, 9, 3, 19 };
+
+	public int[] sort() {
+		int k;
+		for (int i = 0; i &lt; intArr.length; i++) {
+			for (int j = intArr.length - 1; j &gt; 0; j--) {
+				if (intArr[j - 1] &gt; intArr[j]) {
+					k = intArr[j];
+					intArr[j] = intArr[j - 1];
+					intArr[j - 1] = k;
+				}
+			}
+		}
+		return intArr;
+	}
+
+	public static void main(String[] args) {
+		Insertsort is = new Insertsort();
+		int[] arr = is.sort();
+		for (int i = 0; i &lt; arr.length; i++) {
+			System.out.println(i + 1 + ": " + arr[i]);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 1: 1
+ * 2: 3
+ * 3: 6
+ * 4: 7
+ * 5: 9
+ * 6: 12
+ * 7: 13
+ * 8: 14
+ * 9: 16
+ * 10: 17
+ * 11: 19
+ * 12: 20
+ * 13: 21
+ * 14: 23
+ */</template><template autoinsert="true" context="java" deleted="false" description="Mergesort teilt die zu sortierende Liste fortlaufend rekursiv in zwei Teile." enabled="true" name="MySortAlg_Mergesort">/*
+ * Das zu sortierende Array wird fortlaufend rekursiv in zwei Teile aufgeteilt.
+ * Die Teilstücke werden über ein Hilfsarray sortiert und im Ausgangsarray
+ * zusammengeführt.
+ */
+
+public class Mergesort {
+
+	public static int[] intArr = { 16, 23, 14, 7, 21, 20, 6, 1, 17, 13, 12, 9, 3, 19 };
+
+	public int[] sort(int l, int r) {
+
+		if (l &lt; r) {
+			int q = (l + r) / 2;
+
+			sort(l, q);
+			sort(q + 1, r);
+			merge(l, q, r);
+		}
+		return intArr;
+	}
+
+	private void merge(int l, int q, int r) {
+		int[] arr = new int[intArr.length];
+		int i, j;
+		for (i = l; i &lt;= q; i++) {
+			arr[i] = intArr[i];
+		}
+		for (j = q + 1; j &lt;= r; j++) {
+			arr[r + q + 1 - j] = intArr[j];
+		}
+		i = l;
+		j = r;
+		for (int k = l; k &lt;= r; k++) {
+			if (arr[i] &lt;= arr[j]) {
+				intArr[k] = arr[i];
+				i++;
+			} else {
+				intArr[k] = arr[j];
+				j--;
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		Mergesort ms = new Mergesort();
+		int[] arr = ms.sort(0, intArr.length - 1);
+		for (int i = 0; i &lt; arr.length; i++) {
+			System.out.println(i + 1 + ": " + arr[i]);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 1: 1
+ * 2: 3
+ * 3: 6
+ * 4: 7
+ * 5: 9
+ * 6: 12
+ * 7: 13
+ * 8: 14
+ * 9: 16
+ * 10: 17
+ * 11: 19
+ * 12: 20
+ * 13: 21
+ * 14: 23
+ */</template><template autoinsert="true" context="java" deleted="false" description="OETSort ist ein Algorithmus der Elemente beruhend auf deren Listenindices vergleicht und sortiert." enabled="true" name="MySortAlg_OETsort">/*
+ * Der Name kommt von "Odd-Even-Transposition-Sort" (ungerade, gerade, versetzt).
+ * Das zu sortierende Array wird von vorne nach hinten durchlaufen. Für jeden
+ * Durchlauf wird eine innere Schleife initialisiert, deren Zählvariable zunächst
+ * vollständig alle geraden und dann alle ungeraden Indices des Arrays durchläuft.
+ * Für jeden Wert wird geprüft, ob er größer als sein Folgewert ist. Ist dies der
+ * Fall werden beide ausgetauscht. Es findet also ein Vergleich zwischen Werten
+ * von Elementen mit geraden und ungeraden Indices statt.
+ */
+
+public class Oetsort {
+
+	public int[] intArr = { 16, 23, 14, 7, 21, 20, 6, 1, 17, 13, 12, 9, 3, 19 };
+
+	public int[] sort() {
+		int k;
+		for (int i = 0; i &lt; intArr.length; i++) {
+			for (int j = 0 + (i % 2); j &lt; intArr.length - 1; j += 2) {
+				if (intArr[j] &gt; intArr[j + 1]) {
+					k = intArr[j];
+					intArr[j] = intArr[j + 1];
+					intArr[j + 1] = k;
+				}
+			}
+		}
+		return intArr;
+	}
+
+	public static void main(String[] args) {
+		Oetsort os = new Oetsort();
+		int[] arr = os.sort();
+		for (int i = 0; i &lt; arr.length; i++) {
+			System.out.println(i + 1 + ": " + arr[i]);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 1: 1
+ * 2: 3
+ * 3: 6
+ * 4: 7
+ * 5: 9
+ * 6: 12
+ * 7: 13
+ * 8: 14
+ * 9: 16
+ * 10: 17
+ * 11: 19
+ * 12: 20
+ * 13: 21
+ * 14: 23
+ */</template><template autoinsert="true" context="java" deleted="false" description="Quicksort ist ein vergleichsbasierter Algorithmus, der auf der wiederholten Teilung einer Liste beruht." enabled="true" name="MySortAlg_Quicksort">/*
+ * Ein Array (oder ein Teilbereich eines Arrays) wird durch Übergabe des unteren
+ * Start- und oberen Schlussindex in zwei Teilfelder aufgeteilt und der Wert des
+ * die Mitte markierenden Elementes gespeichert. Das erste Teilfeld wird von unten
+ * nach oben, das zweite von oben nach unten durchlaufen und es wird geprüft ob
+ * der Wert des jeweiligen Elementes kleiner bzw. größer als derjenige des
+ * mittleren Elementes ist. Ist dies nicht der Fall, werden die Elemente im Feld
+ * getauscht. Der Index des zweiten Teilfeldes wird dann als oberer Index an die
+ * rekursive Wiederholung des Ablaufs übergeben.
+ */
+
+public class Quicksort {
+
+	public static int[] intArr = { 16, 23, 14, 7, 21, 20, 6, 1, 17, 13, 12, 9, 3, 19 };
+
+	public int[] sort(int l, int r) {
+		int q;
+		if (l &lt; r) {
+			q = partition(l, r);
+			sort(l, q);
+			sort(q + 1, r);
+		}
+		return intArr;
+	}
+
+	int partition(int l, int r) {
+		int i, j, x = intArr[(l + r) / 2];
+		i = l - 1;
+		j = r + 1;
+
+		do {
+			i++;
+		} while (intArr[i] &lt; x);
+
+		do {
+			j--;
+		} while (intArr[j] &gt; x);
+
+		if (i &lt; j) {
+			int k = intArr[i];
+			intArr[i] = intArr[j];
+			intArr[j] = k;
+		} else {
+			return j;
+		}
+		return -1;
+	}
+
+	public static void main(String[] args) {
+		Quicksort qs = new Quicksort();
+		int[] arr = qs.sort(0, intArr.length - 1);
+		for (int i = 0; i &lt; arr.length; i++) {
+			System.out.println(i + 1 + ": " + arr[i]);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 1: 1
+ * 2: 3
+ * 3: 6
+ * 4: 7
+ * 5: 9
+ * 6: 12
+ * 7: 13
+ * 8: 14
+ * 9: 16
+ * 10: 17
+ * 11: 19
+ * 12: 20
+ * 13: 21
+ * 14: 23
+ */</template><template autoinsert="true" context="java" deleted="false" description="Beim Ripplesort wird ein Array von vorne nach hinten durchlaufen." enabled="true" name="MySortAlg_Ripplesort">/*
+ * Ein Array wird von vorne nach hinten durchlaufen. Ist ein Wert größer als sein
+ * Folgewert, werden beide miteinander vertauscht. Dies wird so lange wiederholt
+ * bis eine aufsteigende Reihenfolge eingetreten ist.
+ */
+
+public class Ripplesort {
+
+	public int[] intArr = { 16, 23, 14, 7, 21, 20, 6, 1, 17, 13, 12, 9, 3, 19 };
+
+	public int[] sort() {
+		boolean switched;
+		int k;
+		do {
+			switched = false;
+			for (int i = 0; i &lt; intArr.length - 1; i++) {
+				if (intArr[i] &gt; intArr[i + 1]) {
+					k = intArr[i];
+					intArr[i] = intArr[i + 1];
+					intArr[i + 1] = k;
+					switched = true;
+				}
+			}
+		} while (switched == true);
+		return intArr;
+	}
+
+	public static void main(String[] args) {
+		Ripplesort rs = new Ripplesort();
+		int[] arr = rs.sort();
+		for (int i = 0; i &lt; arr.length; i++) {
+			System.out.println(i + 1 + ": " + arr[i]);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 1: 1
+ * 2: 3
+ * 3: 6
+ * 4: 7
+ * 5: 9
+ * 6: 12
+ * 7: 13
+ * 8: 14
+ * 9: 16
+ * 10: 17
+ * 11: 19
+ * 12: 20
+ * 13: 21
+ * 14: 23
+ */</template><template autoinsert="true" context="java" deleted="false" description="Der Selectsort Algorithmus basiert auf einem sortierten und einem unsortierten Listenanteil" enabled="true" name="MySortAlg_Selectsort">/*
+ * Das zu sortierende Array wird von hinten nach vorne durchlaufen. Eine zweite
+ * Schleife läuft innerhalb der ersten vom zweiten Index des Arrays bis zur
+ * Zählvariablen der äußeren Schleife. Ähnlich wie bei Simplesort wird also ein
+ * Rest-Teilbereich des Arrays von vorne her durchlaufen. Eine Hilfsvariable
+ * speichert den Index falls der Wert des indizierten Elementes größer ist als
+ * der beim vorhergehenden Durchlauf indizierte. Der Wert des durch die äußere
+ * Schleife indizierten Elementes wird dann mit dem des neu ermittelten getauscht.
+ */
+
+public class Selectsort {
+
+	public int[] intArr = { 16, 23, 14, 7, 21, 20, 6, 1, 17, 13, 12, 9, 3, 19 };
+
+	public int[] sort() {
+		int q, k;
+		for (int i = intArr.length - 1; i &gt;= 1; i--) {
+			q = 0;
+			for (int j = 1; j &lt;= i; j++) {
+				if (intArr[j] &gt; intArr[q]) {
+					q = j;
+				}
+			}
+			k = intArr[q];
+			intArr[q] = intArr[i];
+			intArr[i] = k;
+		}
+		return intArr;
+	}
+
+	public static void main(String[] args) {
+		Selectsort ss = new Selectsort();
+		int[] arr = ss.sort();
+		for (int i = 0; i &lt; arr.length; i++) {
+			System.out.println(i + 1 + ": " + arr[i]);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 01: 1
+ * 11: 3
+ * 21: 6
+ * 31: 7
+ * 41: 9
+ * 51: 12
+ * 61: 13
+ * 71: 14
+ * 81: 16
+ * 91: 17
+ * 101: 19
+ * 111: 20
+ * 121: 21
+ * 131: 23
+ */</template><template autoinsert="true" context="java" deleted="false" description="Beim Shakersort wird ein Array in zwei Methoden jeweils von vorne nach hinten durchlaufen." enabled="true" name="MySortAlg_Shakersort">/*
+ * Ein Array wird in zwei Methoden jeweils von vorne nach hinten durchlaufen.
+ * Ist hierbei ein Element größer als sein Folgeelement, werden beide getauscht.
+ * Der Vorgang wird bei der ersten Methode mit incrementiertem unteren Index und
+ * bei der zweiten Methode mit decrementiertem oberen Index so lange wiederholt
+ * wie sich beide Indices unterscheiden.
+ */
+
+public class Shakersort {
+
+	public int[] intArr = { 16, 23, 14, 7, 21, 20, 6, 1, 17, 13, 12, 9, 3, 19 };
+	int k;
+
+	public int[] sort() {
+
+		int i = 0, l = intArr.length;
+		while (i &lt; l) {
+			shaker1(i, l);
+			l--;
+			shaker2(i, l);
+			i++;
+		}
+		return intArr;
+	}
+
+	private void shaker1(int i, int l) {
+		for (int j = i; j &lt; l - 1; j++) {
+			if (intArr[j] &gt; intArr[j + 1]) {
+				k = intArr[j];
+				intArr[j] = intArr[j + 1];
+				intArr[j + 1] = k;
+			}
+		}
+	}
+
+	private void shaker2(int i, int l) {
+		for (int j = l - 1; j &gt;= i; j--) {
+			if (intArr[j] &gt; intArr[j + 1]) {
+				k = intArr[j];
+				intArr[j] = intArr[j + 1];
+				intArr[j + 1] = k;
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		Shakersort ss = new Shakersort();
+		int[] arr = ss.sort();
+		for (int i = 0; i &lt; arr.length; i++) {
+			System.out.println(i + 1 + ": " + arr[i]);
+		}
+	}
+
+}
+
+/*
+ * Example Output
+ * 
+ * 01: 1
+ * 11: 3
+ * 21: 6
+ * 31: 7
+ * 41: 9
+ * 51: 12
+ * 61: 13
+ * 71: 14
+ * 81: 16
+ * 91: 17
+ * 101: 19
+ * 111: 20
+ * 121: 21
+ * 131: 23
+ */</template><template autoinsert="true" context="java" deleted="false" description="Simplesort verläuft in zwei geschachtelten Schleifen." enabled="true" name="MySortAlg_Simplesort">/*
+ * Das zu sortierende Array wird von hinten nach vorne durchlaufen.
+ * Bei jedem Durchlauf wird eine weitere Schleife initialisiert, die die
+ * Arrayindices bis zur Höhe der um eins decrementierten Zählvariablen der
+ * ersten Schleife durchläuft. Das heißt, dass der noch nicht durchlaufene
+ * Teil des Arrays vom Beginn bis zum Index der Zählvariablen geprüft wird.
+ * Ist der Wert des durch den Index der äußeren Schleife repräsentierten
+ * Elementes größer oder gleich dem der inneren 'kleinen Rest-Schleife' werden
+ * beide Elemente getauscht.
+ */
+
+public class Simplesort {
+
+	public int[] intArr = { 16, 23, 14, 7, 21, 20, 6, 1, 17, 13, 12, 9, 3, 19 };
+
+	public int[] sort() {
+		int k;
+		for (int i = intArr.length - 1; i &gt;= 1; i--) {
+			for (int j = 0; j &lt;= i - 1; j++) {
+				if (intArr[j] &gt;= intArr[i]) {
+					k = intArr[i];
+					intArr[i] = intArr[j];
+					intArr[j] = k;
+				}
+			}
+		}
+		return intArr;
+	}
+
+	public static void main(String[] args) {
+		Simplesort ss = new Simplesort();
+		int[] arr = ss.sort();
+		for (int i = 0; i &lt; arr.length; i++) {
+			System.out.println(i + 1 + ": " + arr[i]);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 01: 1
+ * 11: 3
+ * 21: 6
+ * 31: 7
+ * 41: 9
+ * 51: 12
+ * 61: 13
+ * 71: 14
+ * 81: 16
+ * 91: 17
+ * 101: 19
+ * 111: 20
+ * 121: 21
+ * 131: 23
  */</template><template autoinsert="true" context="java" deleted="false" description="Example for static block." enabled="true" name="MyStaticBlock">/*
  * Static blocks are nothing but a normal block of code, enclosed in
  * braces { }, preceded with static keyword. These static blocks will be
@@ -18700,6 +22845,75 @@ public class MyStringComp {
  * 
  * The content is equal
  * The content is not equal
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Do String Anagrams" enabled="true" name="MyString_convertAnagram">import java.io.IOException;
+
+/*
+ * We would like to know how to do String Anagrams.
+ */
+
+public class Main {
+	static int size;
+
+	static int count;
+
+	static char[] charArray;
+
+	public static void main(String[] args) throws IOException {
+		String input = "java2s.com";
+		size = input.length();
+		count = 0;
+		charArray = new char[size];
+		for (int j = 0; j &lt; size; j++)
+			charArray[j] = input.charAt(j);
+		doAnagram(size);
+	}
+
+	public static void doAnagram(int newSize) {
+		int limit;
+		if (newSize == 1) // if too small, return;
+			return;
+		// for each position,
+		for (int i = 0; i &lt; newSize; i++) {
+			doAnagram(newSize - 1); // anagram remaining
+			if (newSize == 2) // if innermost,
+				display();
+			rotate(newSize); // rotate word
+		}
+	}
+
+	// rotate left all chars from position to end
+	public static void rotate(int newSize) {
+		int i;
+		int position = size - newSize;
+		// save first letter
+		char temp = charArray[position];
+		// shift others left
+		for (i = position + 1; i &lt; size; i++)
+			charArray[i - 1] = charArray[i];
+		// put first on right
+		charArray[i - 1] = temp;
+	}
+
+	public static void display() {
+		System.out.print(++count + " ");
+		for (int i = 0; i &lt; size; i++)
+			System.out.print(charArray[i]);
+		System.out.println();
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 11043 ja2.mvacos
+ * 11044 ja2.mvacso
+ * 11045 ja2.mvaosc
+ * 11046 ja2.mvaocs
+ * 11047 ja2.mvscoa
+ * 11048 ja2.mvscao
+ * 11049 ja2.mvsoac
+ * 11050 ja2.mvsoca
+ * 11051 ja2.mvsaco
  */</template><template autoinsert="true" context="java" deleted="false" description="How to change case of a string characters in Java?" enabled="true" name="MyString_convertCase">/*
  * Below example shows how to convert the case of a given string. toUpperCase() method
  * converts all string characters to upper case. toLowerCase() method converts all
@@ -18887,6 +23101,42 @@ public class MyStringLineCounter {
  * line3
  * line4
  * line count: 4
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Solve Hanoi puzzle" enabled="true" name="MyString_HanoiPuzzle">/*
+ * We would like to know how to solve Hanoi puzzle.
+ */
+
+public class Main {
+
+	static int nDisks = 3;
+
+	public static void main(String[] args) {
+		hanoiTower(nDisks, 'A', 'B', 'C');
+	}
+
+	public static void hanoiTower(int topN, char src, char inter, char dest) {
+		if (topN == 1)
+			System.out.println("Disk 1 from " + src + " to " + dest);
+		else {
+			// src to inter
+			hanoiTower(topN - 1, src, dest, inter);
+			// move bottom
+			System.out.println("Disk " + topN + " from " + src + " to " + dest);
+			// inter to dest
+			hanoiTower(topN - 1, inter, src, dest);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Disk 1 from A to C
+ * Disk 2 from A to B
+ * Disk 1 from C to B
+ * Disk 3 from A to C
+ * Disk 1 from B to A
+ * Disk 2 from B to C
+ * Disk 1 from A to C
  */</template><template autoinsert="true" context="java" deleted="false" description="How to get index of a character or string from another String in java?" enabled="true" name="MyString_indexof">/*
  * Below method shows how to get index of a specified character or
  * string from the given string. By using indexOf() method you get get
@@ -18953,6 +23203,28 @@ public class MyStringInitialization {
  * abcd
  * abcd
  * This is a string object This is another String object
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Check if a word is a palindrome" enabled="true" name="MyString_isPalindrome">/*
+ * We would like to know how to check if a word is a palindrome.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		String n = "level";
+		boolean right = true;
+		int f = n.length() - 1;
+		for (int i = 0; i &lt; n.length(); i++) {
+			if (n.charAt(i) != n.charAt(f - i)) {
+				right = false;
+			}
+		}
+		System.out.println("The word is " + right);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * The word is true
  */</template><template autoinsert="true" context="java" deleted="false" description="Java String lastIndexOf() Sample Code" enabled="true" name="MyString_lastIndexOf">/*
  * Below example shows how to get index of a given character or string
  * from a string in the reverse order, means last occuring index. By
@@ -19083,6 +23355,179 @@ public class MyStringReplace {
  * Replace char 's' with 'o':Thio io an example otring
  * Replace first occurance of string"is" with "ui":Thui is an example string
  * Replacing "is" every where with "no":Thno no an example string
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Reverse characters in a sentence" enabled="true" name="MyString_reverse">import java.util.Stack;
+
+/*
+ * We would like to know how to reverse characters in a sentence.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		String input = "This is a sentence";
+		char[] charinput = input.toCharArray();
+		Stack&lt;String&gt; stack = new Stack&lt;String&gt;();
+		for (int i = input.length() - 1; i &gt;= 0; i--) {
+			stack.push(String.valueOf(charinput[i]));
+		}
+		StringBuilder StackPush = new StringBuilder();
+		for (int i = 0; i &lt; stack.size(); i++) {
+			StackPush.append(stack.get(i));
+		}
+		System.out.println(StackPush.toString());
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * ecnetnes a si sihT
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Reverse String Through Stack" enabled="true" name="MyString_reverseStack">import java.io.IOException;
+
+/*
+ * We would like to know how to reverse String Through Stack.
+ */
+
+public class Main {
+	private String input;
+
+	private String output;
+
+	public Main(String in) {
+		input = in;
+	}
+
+	public String doRev() {
+		int stackSize = input.length();
+		Stack theStack = new Stack(stackSize);
+
+		for (int i = 0; i &lt; input.length(); i++) {
+			char ch = input.charAt(i);
+			theStack.push(ch);
+		}
+		output = "";
+		while (!theStack.isEmpty()) {
+			char ch = theStack.pop();
+			output = output + ch;
+		}
+		return output;
+	}
+
+	public static void main(String[] args) throws IOException {
+		String input = "Java Source and Support";
+		String output;
+		Main theReverser = new Main(input);
+		output = theReverser.doRev();
+		System.out.println("Reversed: " + output);
+	}
+
+	class Stack {
+		private int maxSize;
+
+		private char[] stackArray;
+
+		private int top;
+
+		public Stack(int max) {
+			maxSize = max;
+			stackArray = new char[maxSize];
+			top = -1;
+		}
+
+		public void push(char j) {
+			stackArray[++top] = j;
+		}
+
+		public char pop() {
+			return stackArray[top--];
+		}
+
+		public char peek() {
+			return stackArray[top];
+		}
+
+		public boolean isEmpty() {
+			return (top == -1);
+		}
+
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Reversed: troppuS dna ecruoS avaJ
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Implement Soundex Algorithm, as described by Knuth" enabled="true" name="MyString_Soundex">/*
+ * We would like to know how to implement Soundex Algorithm, as described by Knuth.
+ */
+
+public class Main {
+	/*
+	 * Implements the mapping
+	 * from: AEHIOUWYBFPVCGJKQSXZDTLMNR
+	 * to:   00000000111122222222334556
+	 */
+	public static final char[] MAP = {
+			// A B C D E F G H I J K L M
+			'0', '1', '2', '3', '0', '1', '2', '0', '0', '2', '2', '4', '5',
+			// N O P W R S T U V W X Y Z
+			'5', '0', '1', '2', '6', '2', '3', '0', '1', '0', '2', '0', '2' };
+
+	/**
+	 * Convert the given String to its Soundex code.
+	 * 
+	 * @return null If the given string can't be mapped to Soundex.
+	 */
+	public static String soundex(String s) {
+
+		// Algorithm works on uppercase (mainframe era).
+		String t = s.toUpperCase();
+
+		StringBuffer res = new StringBuffer();
+		char c, prev = '?';
+
+		// Main loop: find up to 4 chars that map.
+		for (int i = 0; i &lt; t.length() &amp;&amp; res.length() &lt; 4 &amp;&amp; (c = t.charAt(i)) != ','; i++) {
+
+			// Check to see if the given character is alphabetic.
+			// Text is already converted to uppercase. Algorithm
+			// only handles ASCII letters, do NOT use Character.isLetter()!
+			// Also, skip double letters.
+			if (c &gt;= 'A' &amp;&amp; c &lt;= 'Z' &amp;&amp; c != prev) {
+				prev = c;
+
+				// First char is installed unchanged, for sorting.
+				if (i == 0)
+					res.append(c);
+				else {
+					char m = MAP[c - 'A'];
+					if (m != '0')
+						res.append(m);
+				}
+			}
+		}
+		if (res.length() == 0)
+			return null;
+		for (int i = res.length(); i &lt; 4; i++)
+			res.append('0');
+		return res.toString();
+	}
+
+	/** main */
+	public static void main(String[] args) {
+		String[] names = { "Darwin, Ian", "Davidson, Greg", "Darwent, William", "Derwin, Daemon" };
+		for (int i = 0; i &lt; names.length; i++)
+			System.out.println(Main.soundex(names[i]) + ' ' + names[i]);
+	}
+
+}
+
+/*
+ * Example Output
+ * 
+ * D650 Darwin, Ian
+ * D132 Davidson, Greg
+ * D653 Darwent, William
+ * D650 Derwin, Daemon
  */</template><template autoinsert="true" context="java" deleted="false" description="How to brake or split a string with a delimiter in java?" enabled="true" name="MyString_split">/*
  * Below example shows how to split or brake a string. The split() method splits the
  * string based on the given regular expression or delimiter, and returns the tokens
@@ -19115,6 +23560,38 @@ public class MyStrSplit {
  * based
  * on
  * space
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to - Split a string at every n-th character" enabled="true" name="MyString_splitNthChar">import java.util.ArrayList;
+import java.util.List;
+
+/*
+ * We would like to know how to split a string at every n-th character.
+ */
+
+public class Main {
+	public static void main(String[] args) {
+		for (String part : getParts("HelloWorldJava", 3)) {
+			System.out.println(part);
+		}
+	}
+
+	private static List&lt;String&gt; getParts(String string, int partitionSize) {
+		List&lt;String&gt; parts = new ArrayList&lt;String&gt;();
+		int len = string.length();
+		for (int i = 0; i &lt; len; i += partitionSize) {
+			parts.add(string.substring(i, Math.min(len, i + partitionSize)));
+		}
+		return parts;
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Hel
+ * loW
+ * orl
+ * dJa
+ * va
  */</template><template autoinsert="true" context="java" deleted="false" description="How to find a string start with another string value in java?" enabled="true" name="MyString_startsWith">/*
  * Below example shows how to find whether a string value start with another string
  * value. By using startsWith() method, you can get whether the string starts with the
@@ -19535,6 +24012,46 @@ public class RunMyThread {
  * Expl Thread: 10
  * Main Thread: 11
  * End of Main Thread...
+ */</template><template autoinsert="true" context="java" deleted="false" description="Schließt man das Fenster so wird der Hook gestartet." enabled="true" name="MyThread_ShutdownHook">import javax.swing.JFrame;
+
+/*
+ * Ein Shutdown Hook ist ein ungestarteter Thread, der beim Beenden des Programms
+ * gestartet wird.
+ * 
+ * Es kommt immer wieder vor, dass bestimmte Operationen beim Beenden eines
+ * Programms, auch beim unvorhergesehenen Terminieren, auf jeden Fall ausgeführt
+ * werden müssen. So sollten z.B. offenen Dateien und Datenbankverbindungen auf
+ * jeden Fall geschlossen werden.
+ */
+
+public class ShutdownBsp extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+
+	public ShutdownBsp() {
+		Runtime.getRuntime().addShutdownHook(new ShutdownThread());
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("Shutdown Hook");
+		this.setSize(400, 300);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+	}
+
+	public static void main(String[] args) {
+		new ShutdownBsp();
+	}
+}
+
+class ShutdownThread extends Thread {
+	public void run() {
+		System.out.println("Programm wird geschlossen.");
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Programm wird geschlossen.
  */</template><template autoinsert="true" context="java" deleted="false" description="Java Thread Sleep" enabled="true" name="MyThread_sleep">import java.util.ArrayList;
 import java.util.List;
 
@@ -22285,7 +26802,7 @@ class Mobile implements Serializable {
  * 
  * 1234566778   JOCK
  * 7686291729   Mike
- */</template><template autoinsert="true" context="java" deleted="false" description="How to generate checksum value for for a file in java?" enabled="true" name="MyZip_generateChecksum">import java.io.BufferedInputStream;
+ */</template><template autoinsert="true" context="java" deleted="false" description="How to generate checksum value for for a file in java?" enabled="true" name="MyZip_genChecksum">import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
