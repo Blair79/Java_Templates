@@ -1627,6 +1627,822 @@ public class MyByteArrayToReader {
  * 
  * converting to input stream
  * and this is second line
+ */</template><template autoinsert="true" context="java" deleted="false" description="Personen und KalenderDatenbank" enabled="true" name="MyCalendar_FeiertageundAlter">import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Locale;
+
+/*
+ * Personen und KalenderDatenbank
+ */
+
+public class Feiertage {
+	static ArrayList&lt;Person&gt; personen = new ArrayList&lt;Person&gt;();
+	static ArrayList&lt;kalenderJahr&gt; kalenderJahre = new ArrayList&lt;kalenderJahr&gt;();
+
+	public static final LocalDate findAllerheiligen(int year) {
+		return LocalDate.of(year, Month.NOVEMBER, 1);
+	}
+
+	public static final LocalDate findAllerseelen(int year) {
+		return LocalDate.of(year, Month.NOVEMBER, 2);
+	}
+
+	public static final LocalDate findAschermittwoch(int year) {
+		return findEaster(year).minusDays(46);
+	}
+
+	public static final LocalDate findBeginnSommerzeit(int year) {
+		LocalDate c = LocalDate.of(year, 4, 1).minusDays(1);
+		return lastSundayMonth(year, c.getMonthValue(), c.getDayOfMonth());
+	}
+
+	public static final LocalDate findBußundBettag(int year) {
+		return findVierterAdvent(year).minusDays(32);
+	}
+
+	public static final LocalDate findChristiHimmelfahrtVatertag(int year) {
+		return findEaster(year).plusDays(39);
+	}
+
+	public static final LocalDate findDrittenAdvent(int year) {
+		return findVierterAdvent(year).minusDays(7);
+	}
+
+	/*
+	 * Compute the day of the year that Easter falls on. Step names E1 E2 etc., are
+	 * direct references to Knuth, Vol 1, p 155. @exception IllegalArgumentexception
+	 * If the year is before 1582 (since the algorithm only works on the Gregorian
+	 * calendar).
+	 */
+	public static final LocalDate findEaster(int year) {
+		if (year &lt;= 1582) {
+			throw new IllegalArgumentException("Algorithm invalid before April 1583");
+		}
+		int golden, century, x, z, d, epact, n;
+
+		golden = (year % 19) + 1; /* E1: metonic cycle */
+		century = (year / 100) + 1; /* E2: e.g. 1984 was in 20th C */
+		x = (3 * century / 4) - 12; /* E3: leap year correction */
+		z = ((8 * century + 5) / 25) - 5; /* E3: sync with moon's orbit */
+		d = (5 * year / 4) - x - 10;
+		epact = (11 * golden + 20 + z - x) % 30; /* E5: epact */
+		if ((epact == 25 &amp;&amp; golden &gt; 11) || epact == 24)
+			epact++;
+		n = 44 - epact;
+		n += 30 * (n &lt; 21 ? 1 : 0); /* E6: */
+		n += 7 - ((d + n) % 7);
+		if (n &gt; 31) /* E7: */
+			return LocalDate.of(year, 5 - 1, n - 31); /* April */
+		else
+			return LocalDate.of(year, 4 - 1, n); /* March */
+	}
+
+	public static final LocalDate findEndeSommerzeit(int year) {
+		LocalDate c = LocalDate.of(year, 11, 1).minusDays(1);
+		return lastSundayMonth(year, c.getMonthValue(), c.getDayOfMonth());
+	}
+
+	public static final LocalDate findErstenAdvent(int year) {
+		return findVierterAdvent(year).minusDays(21);
+	}
+
+	public static final LocalDate findErstenWeihnachtsfeiertag(int year) {
+		return LocalDate.of(year, Month.DECEMBER, 25);
+	}
+
+	public static final LocalDate findFaschingsdienstag(int year) {
+		return findEaster(year).minusDays(47);
+	}
+
+	public static final LocalDate findFrauentag(int year) {
+		return LocalDate.of(year, Month.MARCH, 8);
+	}
+
+	public static final LocalDate findFronleichnam(int year) {
+		return findEaster(year).plusDays(60);
+	}
+
+	public static final LocalDate findGründonnerstag(int year) {
+		return findEaster(year).minusDays(3);
+	}
+
+	public static final LocalDate findHeiligabend(int year) {
+		return LocalDate.of(year, Month.DECEMBER, 24);
+	}
+
+	public static final LocalDate findHolyThree(int year) {
+		return LocalDate.of(year, Month.JANUARY, 6);
+	}
+
+	public static final LocalDate findKarfreitag(int year) {
+		return findEaster(year).minusDays(2);
+	}
+
+	public static final LocalDate findMaifeiertag_TagderArbeit(int year) {
+		return LocalDate.of(year, Month.MAY, 1);
+	}
+
+	public static final LocalDate findMariaHimmelfahrt(int year) {
+		return LocalDate.of(year, Month.AUGUST, 15);
+	}
+
+	public static final LocalDate findMartinstag(int year) {
+		return LocalDate.of(year, Month.NOVEMBER, 11);
+	}
+
+	public static final LocalDate findNeujahr(int year) {
+		return LocalDate.of(year, Month.JANUARY, 1);
+	}
+
+	public static final LocalDate findNikolaustag(int year) {
+		return LocalDate.of(year, Month.DECEMBER, 6);
+	}
+
+	public static final LocalDate findOstermontag(int year) {
+		return findEaster(year).plusDays(1);
+	}
+
+	public static final LocalDate findPalmsonntag(int year) {
+		return findEaster(year).minusDays(7);
+	}
+
+	public static final LocalDate findPfingstmontag(int year) {
+		return findEaster(year).plusDays(50);
+	}
+
+	public static final LocalDate findPfingstsonntag(int year) {
+		return findEaster(year).plusDays(49);
+	}
+
+	public static final LocalDate findReformationstagHalloween(int year) {
+		return LocalDate.of(year, Month.OCTOBER, 31);
+	}
+
+	public static final LocalDate findRosenmontag(int year) {
+		return findEaster(year).minusDays(48);
+	}
+
+	public static final LocalDate findSilvester(int year) {
+		return LocalDate.of(year, Month.DECEMBER, 31);
+	}
+
+	public static final LocalDate findTagderdeutschenEinheit(int year) {
+		return LocalDate.of(year, Month.OCTOBER, 3);
+	}
+
+	public static final LocalDate findTotensonntag(int year) {
+		return findVierterAdvent(year).minusDays(28);
+	}
+
+	public static final LocalDate findValentinesday(int year) {
+		return LocalDate.of(year, Month.FEBRUARY, 14);
+	}
+
+	public static final LocalDate findVierterAdvent(int year) {
+		return lastSundayMonth(year, 12, 24);
+	}
+
+	public static final LocalDate findVolkstrauertag(int year) {
+		return findVierterAdvent(year).minusDays(35);
+	}
+
+	public static final LocalDate findZweitenAdvent(int year) {
+		return findVierterAdvent(year).minusDays(14);
+	}
+
+	public static final LocalDate findZweitenWeihnachtsfeiertag(int year) {
+		return LocalDate.of(year, Month.DECEMBER, 26);
+	}
+
+	public static final String getAgeDaysChrono(LocalDate birthday, LocalDate now) {
+		return "age: " + ChronoUnit.DAYS.between(birthday, now);
+	}
+
+	public static final String getAgeMonthsChrono(LocalDate birthday, LocalDate now) {
+		return "age: " + ChronoUnit.MONTHS.between(birthday, now);
+	}
+
+	public static final String getAgeYearPeriod(LocalDate birthday, LocalDate now) {
+		// using period
+		Period period = Period.between(birthday, now);
+		return period.getYears() + " Jahre," + period.getMonths() + " Monate," + period.getDays() + " Tage";
+	}
+
+	public static final String getAgeYearsChrono(LocalDate birthday, LocalDate now) {
+		return "age: " + ChronoUnit.YEARS.between(birthday, now);
+	}
+
+	public static final int getKalenderwoche(LocalDate c) {
+		LocalDate date = LocalDate.of(c.getYear(), c.getMonthValue(), c.getDayOfMonth());
+		TemporalField woy = WeekFields.of(Locale.GERMANY).weekOfWeekBasedYear();
+		return date.get(woy);
+	}
+
+	public static final LocalDate lastSundayMonth(int year, int month, int day) {
+		LocalDate c = LocalDate.of(year, month, day);
+		return c.with(TemporalAdjusters.previous(DayOfWeek.SUNDAY));
+	}
+
+	/** Main program, when used as a standalone application */
+	public static void main(String[] argv) {
+
+		personen.add(new Person("Rene Meier", LocalDate.of(1979, 10, 11)));
+		personen.add(new Person("Vanessa Vogel", LocalDate.of(1989, 4, 4)));
+		kalenderJahre.add(new kalenderJahr(LocalDate.now()));
+		kalenderJahre.add(new kalenderJahr(LocalDate.of(1979, 10, 11)));
+		kalenderJahre.add(new kalenderJahr(LocalDate.of(1989, 4, 4)));
+
+		Iterator&lt;Person&gt; person_itr = personen.iterator();
+		while (person_itr.hasNext()) {
+			person_itr.next().printAttr();
+		}
+
+		Iterator&lt;kalenderJahr&gt; kalender_itr = kalenderJahre.iterator();
+		while (kalender_itr.hasNext()) {
+			kalender_itr.next().printAttr();
+		}
+		System.out.println("*--------------------------------------------*");
+	}
+}
+
+class kalenderJahr {
+	private LocalDate heute;
+	private LocalDate beginSommerzeit;
+	private LocalDate endeSommerzeit;
+	private int jahr;
+	private boolean schaltjahr;
+	private int kalenderWoche;
+	private int kalenderWochen;
+	private int wochenendtage;
+	private int wochentage;
+	private int tageimJahr;
+	private int Samstage;
+	private int Sonntage;
+	private int arbeitstage;
+	private long feiertage;
+
+	private ArrayList&lt;String&gt; festeFeiertage = new ArrayList&lt;String&gt;();
+	private ArrayList&lt;String&gt; beweglicheFeiertage = new ArrayList&lt;String&gt;();
+	private ArrayList&lt;String&gt; beweglicheFeiertageAdvent = new ArrayList&lt;String&gt;();
+
+	public kalenderJahr(LocalDate heute) {
+		super();
+		this.setHeute(heute);
+		this.setJahr(this.getHeute().getYear());
+		this.setKalenderWoche(Feiertage.getKalenderwoche(getHeute()));
+
+		if (this.getHeute().isLeapYear()) {
+			this.setSchaltjahr(true);
+
+			if (Feiertage.findNeujahr(this.getJahr()).getDayOfWeek().getValue() == 4
+					|| Feiertage.findSilvester(this.getJahr()).getDayOfWeek().getValue() == 4) {
+				this.setKalenderWochen(53);
+				this.setWochenendtage(this.getKalenderWochen() * 2 - 2);
+			} else {
+				this.setKalenderWochen(52);
+				this.setWochenendtage(this.getKalenderWochen() * 2);
+			}
+		} else {
+			this.setSchaltjahr(false);
+			if (Feiertage.findNeujahr(this.getJahr()).getDayOfWeek().getValue() == 4
+					|| Feiertage.findSilvester(this.getJahr()).getDayOfWeek().getValue() == 4) {
+				this.setKalenderWochen(53);
+				this.setWochenendtage(this.getKalenderWochen() * 2 - 1);
+			} else {
+				this.setKalenderWochen(52);
+				this.setWochenendtage(this.getKalenderWochen() * 2);
+			}
+		}
+
+		this.setTageimJahr((int) ChronoUnit.DAYS.between(Feiertage.findNeujahr(this.getJahr()),
+				Feiertage.findNeujahr(this.getJahr() + 1)));
+		this.setWochentage(this.getTageimJahr() - this.getWochenendtage());
+
+		this.setSamstage(this.getWochenendtage() / 2);
+
+		if ((Feiertage.findNeujahr(this.getJahr()).getDayOfWeek().getValue() == 7)
+				&amp;&amp; (Feiertage.findSilvester(this.getJahr()).getDayOfWeek().getValue() == 7)) {
+			this.setWochentage(this.getWochentage() - 1);
+			this.setSonntage(this.getWochenendtage() / 2 + 1);
+		} else {
+			this.setSonntage(this.getWochenendtage() / 2);
+		}
+		this.setArbeitstage(this.getWochentage());
+
+		this.setFesteFeiertage("Neujahr " + (Feiertage.findNeujahr(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findNeujahr(this.getJahr())));
+		if ((Feiertage.findNeujahr(this.getJahr())).getDayOfWeek().getValue() != 7
+				&amp;&amp; (Feiertage.findNeujahr(this.getJahr())).getDayOfWeek().getValue() != 6)
+			this.setArbeitstage(this.getArbeitstage() - 1);
+
+		this.setFesteFeiertage("Heilige Drei Könige " + (Feiertage.findHolyThree(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findHolyThree(this.getJahr())));
+		this.setFesteFeiertage("Valentinstag " + (Feiertage.findValentinesday(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findValentinesday(this.getJahr())));
+		this.setFesteFeiertage("Frauentag " + (Feiertage.findFrauentag(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findFrauentag(this.getJahr())));
+		this.setFesteFeiertage("Ostern " + (Feiertage.findEaster(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findEaster(this.getJahr())));
+
+		this.setFesteFeiertage(
+				"Maifeiertag / TagderArbeit " + (Feiertage.findMaifeiertag_TagderArbeit(this.getJahr())).getDayOfWeek()
+						+ " " + (Feiertage.findMaifeiertag_TagderArbeit(this.getJahr())));
+		if ((Feiertage.findMaifeiertag_TagderArbeit(this.getJahr())).getDayOfWeek().getValue() != 7
+				&amp;&amp; (Feiertage.findMaifeiertag_TagderArbeit(this.getJahr())).getDayOfWeek().getValue() != 6)
+			this.setArbeitstage(this.getArbeitstage() - 1);
+
+		this.setFesteFeiertage("Maria Himmelfahrt " + (Feiertage.findMariaHimmelfahrt(this.getJahr())).getDayOfWeek()
+				+ " " + (Feiertage.findMariaHimmelfahrt(this.getJahr())));
+
+		this.setFesteFeiertage(
+				"Tag der deutschen Einheit " + (Feiertage.findTagderdeutschenEinheit(this.getJahr())).getDayOfWeek()
+						+ " " + (Feiertage.findTagderdeutschenEinheit(this.getJahr())));
+		if ((Feiertage.findTagderdeutschenEinheit(this.getJahr())).getDayOfWeek().getValue() != 7
+				&amp;&amp; (Feiertage.findTagderdeutschenEinheit(this.getJahr())).getDayOfWeek().getValue() != 6)
+			this.setArbeitstage(this.getArbeitstage() - 1);
+
+		this.setFesteFeiertage(
+				"Reformationstag / Halloween " + (Feiertage.findReformationstagHalloween(this.getJahr())).getDayOfWeek()
+						+ " " + (Feiertage.findReformationstagHalloween(this.getJahr())));
+		if (this.getJahr() == 2017
+				&amp;&amp; (Feiertage.findReformationstagHalloween(this.getJahr())).getDayOfWeek().getValue() != 7
+				&amp;&amp; (Feiertage.findReformationstagHalloween(this.getJahr())).getDayOfWeek().getValue() != 6)
+			this.setArbeitstage(this.getArbeitstage() - 1);
+
+		this.setFesteFeiertage("Allerheiligen " + (Feiertage.findAllerheiligen(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findAllerheiligen(this.getJahr())));
+		if ((Feiertage.findAllerheiligen(this.getJahr())).getDayOfWeek().getValue() != 7
+				&amp;&amp; (Feiertage.findAllerheiligen(this.getJahr())).getDayOfWeek().getValue() != 6)
+			this.setArbeitstage(this.getArbeitstage() - 1);
+
+		this.setFesteFeiertage("Allerseelen " + (Feiertage.findAllerseelen(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findAllerseelen(this.getJahr())));
+
+		this.setFesteFeiertage("Martinstag " + (Feiertage.findMartinstag(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findMartinstag(this.getJahr())));
+
+		this.setFesteFeiertage("Nikolaustag " + (Feiertage.findNikolaustag(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findNikolaustag(this.getJahr())));
+
+		this.setFesteFeiertage("Heiligabend " + (Feiertage.findHeiligabend(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findHeiligabend(this.getJahr())));
+
+		this.setFesteFeiertage(
+				"1. Weihnachtsfeiertag " + (Feiertage.findErstenWeihnachtsfeiertag(this.getJahr())).getDayOfWeek() + " "
+						+ (Feiertage.findErstenWeihnachtsfeiertag(this.getJahr())));
+		if ((Feiertage.findErstenWeihnachtsfeiertag(this.getJahr())).getDayOfWeek().getValue() != 7
+				&amp;&amp; (Feiertage.findErstenWeihnachtsfeiertag(this.getJahr())).getDayOfWeek().getValue() != 6)
+			this.setArbeitstage(this.getArbeitstage() - 1);
+
+		this.setFesteFeiertage(
+				"2. Weihnachtsfeiertag " + (Feiertage.findZweitenWeihnachtsfeiertag(this.getJahr())).getDayOfWeek()
+						+ " " + (Feiertage.findZweitenWeihnachtsfeiertag(this.getJahr())));
+		if ((Feiertage.findZweitenWeihnachtsfeiertag(this.getJahr())).getDayOfWeek().getValue() != 7
+				&amp;&amp; (Feiertage.findZweitenWeihnachtsfeiertag(this.getJahr())).getDayOfWeek().getValue() != 6)
+			this.setArbeitstage(this.getArbeitstage() - 1);
+
+		this.setFesteFeiertage("Silvester " + (Feiertage.findSilvester(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findSilvester(this.getJahr())));
+
+		this.setBeweglicheFeiertage("Rosenmontag " + (Feiertage.findRosenmontag(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findRosenmontag(this.getJahr())));
+
+		this.setBeweglicheFeiertage(
+				"Faschingsdienstag " + (Feiertage.findFaschingsdienstag(this.getJahr())).getDayOfWeek() + " "
+						+ (Feiertage.findFaschingsdienstag(this.getJahr())));
+
+		this.setBeweglicheFeiertage("Aschermittwoch " + (Feiertage.findAschermittwoch(this.getJahr())).getDayOfWeek()
+				+ " " + (Feiertage.findAschermittwoch(this.getJahr())));
+
+		this.setBeweglicheFeiertage("Palmsonntag " + (Feiertage.findPalmsonntag(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findPalmsonntag(this.getJahr())));
+
+		this.setBeweglicheFeiertage("Gründonnerstag " + (Feiertage.findGründonnerstag(this.getJahr())).getDayOfWeek()
+				+ " " + (Feiertage.findGründonnerstag(this.getJahr())));
+
+		this.setBeweglicheFeiertage("Karfreitag " + (Feiertage.findKarfreitag(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findKarfreitag(this.getJahr())));
+		if ((Feiertage.findKarfreitag(this.getJahr())).getDayOfWeek().getValue() != 7
+				&amp;&amp; (Feiertage.findKarfreitag(this.getJahr())).getDayOfWeek().getValue() != 6)
+			this.setArbeitstage(this.getArbeitstage() - 1);
+
+		this.setBeweglicheFeiertage("Ostermontag " + (Feiertage.findOstermontag(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findOstermontag(this.getJahr())));
+		if ((Feiertage.findOstermontag(this.getJahr())).getDayOfWeek().getValue() != 7
+				&amp;&amp; (Feiertage.findOstermontag(this.getJahr())).getDayOfWeek().getValue() != 6)
+			this.setArbeitstage(this.getArbeitstage() - 1);
+
+		this.setBeweglicheFeiertage("Christi Himmelfahrt, Vatertag "
+				+ (Feiertage.findChristiHimmelfahrtVatertag(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findChristiHimmelfahrtVatertag(this.getJahr())));
+		if ((Feiertage.findChristiHimmelfahrtVatertag(this.getJahr())).getDayOfWeek().getValue() != 7
+				&amp;&amp; (Feiertage.findChristiHimmelfahrtVatertag(this.getJahr())).getDayOfWeek().getValue() != 6)
+			this.setArbeitstage(this.getArbeitstage() - 1);
+
+		this.setBeweglicheFeiertage("Pfingstsonntag " + (Feiertage.findPfingstsonntag(this.getJahr())).getDayOfWeek()
+				+ " " + (Feiertage.findPfingstsonntag(this.getJahr())));
+
+		this.setBeweglicheFeiertage("Pfingstmontag " + (Feiertage.findPfingstmontag(this.getJahr())).getDayOfWeek()
+				+ " " + (Feiertage.findPfingstmontag(this.getJahr())));
+		if ((Feiertage.findPfingstmontag(this.getJahr())).getDayOfWeek().getValue() != 7
+				&amp;&amp; (Feiertage.findPfingstmontag(this.getJahr())).getDayOfWeek().getValue() != 6)
+			this.setArbeitstage(this.getArbeitstage() - 1);
+
+		this.setBeweglicheFeiertage("Fronleichnam " + (Feiertage.findFronleichnam(this.getJahr())).getDayOfWeek() + " "
+				+ (Feiertage.findFronleichnam(this.getJahr())));
+		if ((Feiertage.findFronleichnam(this.getJahr())).getDayOfWeek().getValue() != 7
+				&amp;&amp; (Feiertage.findFronleichnam(this.getJahr())).getDayOfWeek().getValue() != 6)
+			this.setArbeitstage(this.getArbeitstage() - 1);
+
+		this.setBeweglicheFeiertageAdvent("4. Advent " + (Feiertage.findVierterAdvent(this.getJahr())).getDayOfWeek()
+				+ " " + (Feiertage.findVierterAdvent(this.getJahr())));
+
+		this.setBeweglicheFeiertageAdvent(
+				"Volkstrauertag " + (Feiertage.findVolkstrauertag(this.getJahr())).getDayOfWeek() + " "
+						+ (Feiertage.findVolkstrauertag(this.getJahr())));
+		this.setBeweglicheFeiertageAdvent(
+				"Buß- und Bettag " + (Feiertage.findBußundBettag(this.getJahr())).getDayOfWeek() + " "
+						+ (Feiertage.findBußundBettag(this.getJahr())));
+		this.setBeweglicheFeiertageAdvent("Totensonntag " + (Feiertage.findTotensonntag(this.getJahr())).getDayOfWeek()
+				+ " " + (Feiertage.findTotensonntag(this.getJahr())));
+		this.setBeweglicheFeiertageAdvent("1. Advent " + (Feiertage.findErstenAdvent(this.getJahr())).getDayOfWeek()
+				+ " " + (Feiertage.findErstenAdvent(this.getJahr())));
+		this.setBeweglicheFeiertageAdvent("2. Advent " + (Feiertage.findZweitenAdvent(this.getJahr())).getDayOfWeek()
+				+ " " + (Feiertage.findZweitenAdvent(this.getJahr())));
+		this.setBeweglicheFeiertageAdvent("3. Advent " + (Feiertage.findDrittenAdvent(this.getJahr())).getDayOfWeek()
+				+ " " + (Feiertage.findDrittenAdvent(this.getJahr())));
+
+		this.setFeiertage(this.getWochentage() - this.getArbeitstage());
+		this.setBeginSommerzeit(Feiertage.findBeginnSommerzeit(this.getJahr()));
+		this.setEndeSommerzeit(Feiertage.findEndeSommerzeit(this.getJahr()));
+	}
+
+	public void printAttr() {
+		System.out.println("*-----------------Allgemeines----------------*");
+		System.out.println(heute);
+		System.out.println(beginSommerzeit);
+		System.out.println(endeSommerzeit);
+		System.out.println(jahr);
+		System.out.println(schaltjahr);
+		System.out.println(kalenderWoche);
+		System.out.println(kalenderWochen);
+		System.out.println(wochenendtage);
+		System.out.println(wochentage);
+		System.out.println(tageimJahr);
+		System.out.println(Samstage);
+		System.out.println(Sonntage);
+		System.out.println(arbeitstage);
+		System.out.println(feiertage);
+		System.out.println("*---------------FesteFeiertage---------------*");
+		Iterator&lt;String&gt; itr = this.getFesteFeiertage().iterator();
+		while (itr.hasNext()) {
+			System.out.println(itr.next());
+		}
+		System.out.println("*-------------BeweglicheFeiertage------------*");
+		itr = this.getBeweglicheFeiertage().iterator();
+		while (itr.hasNext()) {
+			System.out.println(itr.next());
+		}
+		System.out.println("*----------BeweglicheFeiertageAdvent---------*");
+		itr = this.getBeweglicheFeiertageAdvent().iterator();
+		while (itr.hasNext()) {
+			System.out.println(itr.next());
+		}
+	}
+
+	public int getTageimJahr() {
+		return tageimJahr;
+	}
+
+	public void setTageimJahr(int tageimJahr) {
+		this.tageimJahr = tageimJahr;
+	}
+
+	public boolean isSchaltjahr() {
+		return schaltjahr;
+	}
+
+	public void setSchaltjahr(boolean schaltjahr) {
+		this.schaltjahr = schaltjahr;
+	}
+
+	public LocalDate getHeute() {
+		return heute;
+	}
+
+	public void setHeute(LocalDate heute) {
+		this.heute = heute;
+	}
+
+	public int getKalenderWochen() {
+		return kalenderWochen;
+	}
+
+	public void setKalenderWochen(int kalenderWochen) {
+		this.kalenderWochen = kalenderWochen;
+	}
+
+	public int getWochenendtage() {
+		return wochenendtage;
+	}
+
+	public void setWochenendtage(int wochenendtage) {
+		this.wochenendtage = wochenendtage;
+	}
+
+	public int getKalenderWoche() {
+		return kalenderWoche;
+	}
+
+	public void setKalenderWoche(int kalenderWoche) {
+		this.kalenderWoche = kalenderWoche;
+	}
+
+	public int getJahr() {
+		return jahr;
+	}
+
+	public void setJahr(int jahr) {
+		this.jahr = jahr;
+	}
+
+	public int getWochentage() {
+		return wochentage;
+	}
+
+	public void setWochentage(int wochentage) {
+		this.wochentage = wochentage;
+	}
+
+	public int getSamstage() {
+		return Samstage;
+	}
+
+	public void setSamstage(int samstage) {
+		Samstage = samstage;
+	}
+
+	public int getSonntage() {
+		return Sonntage;
+	}
+
+	public void setSonntage(int sonntage) {
+		Sonntage = sonntage;
+	}
+
+	public int getArbeitstage() {
+		return arbeitstage;
+	}
+
+	public void setArbeitstage(int arbeitstage) {
+		this.arbeitstage = arbeitstage;
+	}
+
+	public ArrayList&lt;String&gt; getBeweglicheFeiertage() {
+		return beweglicheFeiertage;
+	}
+
+	public void setBeweglicheFeiertage(String beweglicherFeiertag) {
+		this.beweglicheFeiertage.add(beweglicherFeiertag);
+	}
+
+	public ArrayList&lt;String&gt; getBeweglicheFeiertageAdvent() {
+		return beweglicheFeiertageAdvent;
+	}
+
+	public void setBeweglicheFeiertageAdvent(String beweglicherFeiertagAdvent) {
+		this.beweglicheFeiertageAdvent.add(beweglicherFeiertagAdvent);
+	}
+
+	public ArrayList&lt;String&gt; getFesteFeiertage() {
+		return festeFeiertage;
+	}
+
+	public void setFesteFeiertage(String festerFeiertag) {
+		this.festeFeiertage.add(festerFeiertag);
+	}
+
+	public long getFeiertage() {
+		return feiertage;
+	}
+
+	public void setFeiertage(long feiertage) {
+		this.feiertage = feiertage;
+	}
+
+	public LocalDate getEndeSommerzeit() {
+		return endeSommerzeit;
+	}
+
+	public void setEndeSommerzeit(LocalDate endeSommerzeit) {
+		this.endeSommerzeit = endeSommerzeit;
+	}
+
+	public LocalDate getBeginSommerzeit() {
+		return beginSommerzeit;
+	}
+
+	public void setBeginSommerzeit(LocalDate beginSommerzeit) {
+		this.beginSommerzeit = beginSommerzeit;
+	}
+}
+
+class Person {
+	private String alterGenau;
+	private String alterJahre;
+	private String alterMonate;
+	private String alterTage;
+	private LocalDate geburtsdatum;
+	private String name;
+
+	/**
+	 * @param name
+	 * @param geburtsdatum
+	 */
+	public Person(String name, LocalDate geburtsdatum) {
+		super();
+		this.name = name;
+		this.geburtsdatum = geburtsdatum;
+		this.alterGenau = Feiertage.getAgeYearPeriod(getGeburtsdatum(), LocalDate.now());
+		this.alterJahre = Feiertage.getAgeYearsChrono(getGeburtsdatum(), LocalDate.now());
+		this.alterMonate = Feiertage.getAgeMonthsChrono(getGeburtsdatum(), LocalDate.now());
+		this.alterTage = Feiertage.getAgeDaysChrono(getGeburtsdatum(), LocalDate.now());
+	}
+
+	public void printAttr() {
+		System.out.println("*-------------------Person-------------------*");
+		System.out.println(name);
+		System.out.println(geburtsdatum);
+		System.out.println(alterGenau);
+		System.out.println(alterJahre);
+		System.out.println(alterMonate);
+		System.out.println(alterTage);
+	}
+
+	public String getAlterGenau() {
+		return alterGenau;
+	}
+
+	public String getAlterJahre() {
+		return alterJahre;
+	}
+
+	public String getAlterMonate() {
+		return alterMonate;
+	}
+
+	public String getAlterTage() {
+		return alterTage;
+	}
+
+	public LocalDate getGeburtsdatum() {
+		return geburtsdatum;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setAlterGenau(String alterGenau) {
+		this.alterGenau = alterGenau;
+	}
+
+	public void setAlterJahre(String alterJahre) {
+		this.alterJahre = alterJahre;
+	}
+
+	public void setAlterMonate(String alterMonate) {
+		this.alterMonate = alterMonate;
+	}
+
+	public void setAlterTage(String alterTage) {
+		this.alterTage = alterTage;
+	}
+
+	public void setGeburtsdatum(LocalDate geburtsdatum) {
+		this.geburtsdatum = geburtsdatum;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+}
+
+/*
+ * Example Output
+ */</template><template autoinsert="true" context="java" deleted="false" description="Abstrakte Klassen sind Klassen, die als Oberklassen dienen und selbst nicht zur Bildung von Objekten herangezogen werden können." enabled="true" name="MyClass_Abstract">import java.awt.Point;
+
+/*
+ * Abstrakte Klassen sind Klassen, die als Oberklassen dienen und selbst nicht
+ * zur Bildung von Objekten herangezogen werden können.
+ */
+
+public class AbstractClassBsp {
+
+	public static void main(String[] args) {
+		Norton norton = new Norton();
+		System.out.println("Ausgangspunkt: " + norton.getPos().x);
+		norton.fahre(10);
+		System.out.println("Fahrtziel: " + norton.getPos().x);
+
+		// Luftfahrzeug lfz = new Luftfahrzeug(); // Fehler
+
+		Cesna cesna = new Cesna();
+		cesna.bewegDich(2000, 150);
+		System.out.println("Flugziel: " + cesna.getPos().x + ", Hoehe: " + cesna.getPos().y);
+	}
+}
+
+abstract class Fahrzeug {
+	Point pos = new Point(0, 0);
+
+	abstract void bewegDich(int h, int v);
+
+	Point getPos() {
+		return pos;
+	}
+}
+
+abstract class Motorrad extends Fahrzeug {
+	// ...
+}
+
+class Norton extends Motorrad {
+
+	@Override
+	void bewegDich(int h, int v) {
+		pos = new Point(h, v);
+	}
+
+	void fahre(int h) {
+		bewegDich(h, 0);
+	}
+}
+
+abstract class Luftfahrzeug extends Fahrzeug {
+	Point fliege(int h, int v) {
+		return new Point(getPos().x + h, getPos().y + v);
+	}
+}
+
+class Cesna extends Luftfahrzeug {
+	@Override
+	void bewegDich(int h, int v) {
+		pos = fliege(h, v);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Ausgangspunkt: 0
+ * Fahrtziel: 10
+ * Flugziel: 2000, Hoehe: 150
+ */</template><template autoinsert="true" context="java" deleted="false" description="Anonyme Klassen sind namenlose Klassen, die gleichzeitig definiert und initialisiert werden." enabled="true" name="MyClass_Anonymous">/*
+ * Anonyme Klassen sind namenlose Klassen, die gleichzeitig definiert und
+ * initialisiert werden.
+ */
+
+public class AnonymousClassBsp {
+
+	public static void main(String[] args) {
+		new Person("Meier") {
+			void printName() {
+				System.out.println("Mein Name ist: " + this.getName());
+			}
+		};
+	}
+}
+
+class Person {
+	private String name;
+
+	public Person(String name) {
+		this.name = name;
+		printName();
+	}
+
+	void printName() {
+		System.out.println(name);
+	}
+
+	String getName() {
+		return name;
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Mein Name ist: Meier
  */</template><template autoinsert="true" context="java" deleted="false" description="How to create Class" enabled="true" name="MyClass_create">public class ${name} {
 
 }</template><template autoinsert="true" context="java" deleted="false" description="How to access top level class variables from static member classes?" enabled="true" name="MyClasses_accessStaticMemberClass">/*
@@ -7417,6 +8233,210 @@ public class MyIstoBr {
  * Example Output
  * 
  * x;x;X;
+ */</template><template autoinsert="true" context="java" deleted="false" description="Durch Schnittstellen (Interfaces) ist es möglich, die streng lineare Vererbungshierarchie in Java zu durchbrechen und eine spezielle Form der Mehrfachvererbung zu erlauben." enabled="true" name="MyInterface_Basic">/*
+ * Interfaces ermöglichen eine spezielle Form der Mehrfachvererbung, da es in
+ * Java nicht erlaubt ist, eine Klasse von mehreren Superklassen abzuleiten.
+ */
+
+public class InterfaceBsp {
+	public static void main(String[] args) {
+		Fahrrad f = new Fahrrad();
+		System.out.println("Tempo des Fahrrads: " + f.tempo);
+		f.beschleunigen(10);
+		System.out.println("Tempo des Fahrrads: " + f.tempo);
+		f.verzoegern(8);
+		System.out.println("Tempo des Fahrrads: " + f.tempo);
+
+		MotoGuzzi m = new MotoGuzzi();
+		System.out.println("Tempo des Motorrads: " + m.tempo);
+		m.beschleunigen(50);
+		System.out.println("Tempo des Motorrads: " + m.tempo);
+		m.verzoegern(36);
+		System.out.println("Tempo des Motorrads: " + m.tempo);
+	}
+}
+
+interface Drivable {
+
+	int RAEDER = 2; // implizit public static final
+
+	void beschleunigen(double d);
+
+	void verzoegern(double d);
+}
+
+class Fahrrad implements Drivable {
+
+	double tempo = 0;
+
+	@Override
+	public void beschleunigen(double faktor) {
+		if (faktor &lt; 0)
+			return;
+		tempo += faktor * 1.5;
+		tempo = tempo &gt; 50 ? 50 : tempo;
+	}
+
+	@Override
+	public void verzoegern(double faktor) {
+		if (faktor &lt; 0)
+			return;
+		tempo -= faktor * 1.2;
+		tempo = tempo &lt; 0 ? 0 : tempo;
+	}
+}
+
+class MotoGuzzi implements Drivable {
+
+	double tempo = 0;
+
+	@Override
+	public void beschleunigen(double faktor) {
+		if (faktor &lt; 0)
+			return;
+		tempo += faktor * 6.3;
+		tempo = tempo &gt; 200 ? 200 : tempo;
+	}
+
+	@Override
+	public void verzoegern(double faktor) {
+		if (faktor &lt; 0)
+			return;
+		tempo -= faktor * 4.6;
+		tempo = tempo &lt; 0 ? 0 : tempo;
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Tempo des Fahrrads: 0.0
+ * Tempo des Fahrrads: 15.0
+ * Tempo des Fahrrads: 5.4
+ * Tempo des Motorrads: 0.0
+ * Tempo des Motorrads: 200.0
+ * Tempo des Motorrads: 34.400000000000006
+ */</template><template autoinsert="true" context="java" deleted="false" description="Die Klasse zeigt, wie auf die Erreichbarkeit eines Internet-Hosts getestet werden kann." enabled="true" name="MyIO_checkHost">import java.io.IOException;
+import java.net.InetAddress;
+
+/*
+ * Die Klasse InetAdress stellt Methoden bereit. die zur Verifizierungung
+ * von Netzwerkadressen verwendet werden können.
+ */
+
+public class HostErreichbarkeit {
+
+	public static void main(String[] args) {
+		String host = "javabeginners.de";
+		try {
+			InetAddress iAdr = InetAddress.getByName(host);
+			if (iAdr.isReachable(5000)) {
+				System.out.println("Host '" + host + "' ist erreichbar und hat die IP: " + iAdr.getHostAddress());
+			} else {
+				System.out.println("Host '" + host + "' ist nicht erreichbar");
+			}
+		} catch (IOException e) {
+			System.err.println("IOProbleme beim Testen der Erreichbarkeit von: '" + host);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Host 'javabeginners.de' ist erreichbar und hat die IP: 144.76.74.107
+ */</template><template autoinsert="true" context="java" deleted="false" description="Herstellen einer FTP-Verbindung zu einem Webserver" enabled="true" name="MyIO_connectFTP">import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+/*
+ * Die Klasse URL bietet Möglichkeiten des Zugriffs nicht nur auf Webseiten,
+ * sondern auch auf FTP-Server.
+ */
+
+public class FTPVerbindung {
+
+	public static void main(String[] args) {
+		try {
+			URL url = new URL("ftp://speedtest.tele2.net/");
+			show(url);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void show(URL url) throws IOException {
+		InputStream in = url.openStream();
+		BufferedReader buff = new BufferedReader(new InputStreamReader(in));
+		String s;
+		while ((s = buff.readLine()) != null) {
+			System.out.println(s);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * -rw-r--r--    1 0        0        1073741824000 Feb 19  2016 1000GB.zip
+ * -rw-r--r--    1 0        0        107374182400 Feb 19  2016 100GB.zip
+ * -rw-r--r--    1 0        0          102400 Feb 19  2016 100KB.zip
+ * -rw-r--r--    1 0        0        104857600 Feb 19  2016 100MB.zip
+ * .
+ * .
+ * .
+ */</template><template autoinsert="true" context="java" deleted="false" description="Als Antwort auf eine Anfrage sendet ein Webserver einen Antwortheader. Die Klasse URLConnection erlaubt es, diesen abzufragen. " enabled="true" name="MyIO_HeaderURL">import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Iterator;
+import java.util.Set;
+
+/*
+ * Als Antwort auf eine Anfrage sendet ein Webserver einen Antwortheader.
+ * Die Klasse URLConnection erlaubt es, diesen abzufragen.
+ */
+
+public class URLVerbindung {
+
+	public static void main(String[] args) {
+		try {
+			URL url = new URL("http://www.javabeginners.de");
+
+			URLConnection con = url.openConnection();
+			con.connect();
+			Set s = con.getHeaderFields().entrySet();
+			Iterator&lt;Object&gt; iter = s.iterator();
+			while (iter.hasNext()) {
+				System.out.println(iter.next());
+			}
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Keep-Alive=[timeout=5, max=100]
+ * null=[HTTP/1.1 302 Found]
+ * Cache-Control=[max-age=2678400]
+ * Server=[Apache]
+ * Connection=[Keep-Alive]
+ * Expires=[Sat, 07 Oct 2017 00:50:03 GMT]
+ * Content-Length=[275]
+ * Date=[Wed, 06 Sep 2017 00:50:03 GMT]
+ * Content-Type=[text/html; charset=iso-8859-1]
+ * Location=[https://javabeginners.de/]
  */</template><template autoinsert="true" context="java" deleted="false" description="Open Browser" enabled="true" name="MyIO_openBrowser">/*
  * Öffnet den Browser lokal oder im Inet
  */
@@ -7649,7 +8669,76 @@ public class ShellCommand {
  * --- google.com ping statistics ---
  * 3 packets transmitted, 3 received, 0% packet loss, time 2002ms
  * rtt min/avg/max/mdev = 30.547/32.247/33.347/1.228 ms
- */</template><template autoinsert="true" context="java" deleted="false" description=" A simple TCP-based server" enabled="true" name="MyIO_SimpleSocketListener">import java.io.IOException;
+ */</template><template autoinsert="true" context="java" deleted="false" description="Client using java.net.Socket to establish a connection with the server." enabled="true" name="MyIO_SimpleClient">import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.net.Socket;
+import java.net.*;
+import javax.swing.*;
+
+/*
+ * A simple client used to connect to the server
+ */
+
+public class SimpleClient extends JFrame implements ActionListener {
+
+	private static final long serialVersionUID = 1L;
+	Socket client = null;
+	String serverAddr = "localhost";
+	int serverPort = 8888;
+	PrintWriter out;
+	JTextField tf;
+
+	public SimpleClient() {
+		try {
+			client = new Socket(serverAddr, serverPort);
+			System.out.println("Client: " + client);
+			out = new PrintWriter(client.getOutputStream());
+			out.println("Hello");
+			out.flush(); // need to flush a short message
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Set up the UI
+		Container cp = this.getContentPane();
+		cp.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 15));
+		cp.add(new JLabel("Enter your message or \"quit\""));
+		tf = new JTextField(40);
+		tf.addActionListener(this);
+		cp.add(tf);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.pack();
+		this.setTitle("Simple Client");
+		this.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String message = tf.getText();
+		if (message.equals("quit")) {
+			// Need to close the socket to orderly disconnect from the server
+			try {
+				out.close();
+				client.close();
+				System.exit(0);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} else {
+			// Send the message entered to the network socket
+			out.println(message);
+			out.flush();
+			tf.setText("");
+		}
+	}
+
+	public static void main(String[] args) {
+		new SimpleClient();
+	}
+}</template><template autoinsert="true" context="java" deleted="false" description=" A simple TCP-based server" enabled="true" name="MyIO_SimpleSocketListener">import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -7781,6 +8870,183 @@ public class SimpleThreadedSocketListener {
  * Socket: Socket[addr=/127.0.0.1,port=57406,localport=8888]
  * huhu
  * whatsupp
+ */</template><template autoinsert="true" context="java" deleted="false" description="Simple Java UDP Server" enabled="true" name="MyIO_SimpleUDPServer">import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
+/*
+ *  Simple Java UDP Server
+ */
+
+public class UDPServer {
+	public static void main(String args[]) throws Exception {
+		DatagramSocket serverSocket = new DatagramSocket(9876);
+		byte[] receiveData = new byte[1024];
+		byte[] sendData = new byte[1024];
+		while (true) {
+			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+			serverSocket.receive(receivePacket);
+			String sentence = new String(receivePacket.getData());
+			System.out.println("RECEIVED: " + sentence);
+			InetAddress IPAddress = receivePacket.getAddress();
+			int port = receivePacket.getPort();
+			String capitalizedSentence = sentence.toUpperCase();
+			sendData = capitalizedSentence.getBytes();
+			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+			serverSocket.send(sendPacket);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * RECEIVED: hey
+ */</template><template autoinsert="true" context="java" deleted="false" description="Simple Service Discovery Protocol" enabled="true" name="MyIO_SSDPDiscover">/*
+ * UPNP/SSDP client to demonstrate the usage of UDP multicast sockets.
+ */
+
+import java.io.*;
+import java.net.*;
+
+public class SSDPNetworkClient {
+
+	public void multicast() throws IOException {
+		try {
+			InetAddress multicastAddress = InetAddress.getByName("239.255.255.250");
+			// multicast address for SSDP
+			final int port = 1900; // standard port for SSDP
+			MulticastSocket socket = new MulticastSocket(port);
+			socket.setReuseAddress(true);
+			socket.setSoTimeout(15000);
+			socket.joinGroup(multicastAddress);
+
+			// send discover
+			byte[] txbuf = DISCOVER_MESSAGE_ROOTDEVICE.getBytes("UTF-8");
+			DatagramPacket hi = new DatagramPacket(txbuf, txbuf.length, multicastAddress, port);
+			socket.send(hi);
+			System.out.println("SSDP discover sent");
+
+			do {
+				byte[] rxbuf = new byte[8192];
+				DatagramPacket packet = new DatagramPacket(rxbuf, rxbuf.length);
+				socket.receive(packet);
+				dumpPacket(packet);
+			} while (true); // should leave loop by SocketTimeoutException
+		} catch (SocketTimeoutException e) {
+			System.out.println("Timeout");
+		}
+	}
+
+	private void dumpPacket(DatagramPacket packet) throws IOException {
+		InetAddress addr = packet.getAddress();
+		System.out.println("Response from: " + addr);
+		ByteArrayInputStream in = new ByteArrayInputStream(packet.getData(), 0, packet.getLength());
+		copyStream(in, System.out);
+	}
+
+	private void copyStream(InputStream in, OutputStream out) throws IOException {
+		BufferedInputStream bin = new BufferedInputStream(in);
+		BufferedOutputStream bout = new BufferedOutputStream(out);
+		int c = bin.read();
+		while (c != -1) {
+			out.write((char) c);
+			c = bin.read();
+		}
+		bout.flush();
+	}
+
+	private final static String DISCOVER_MESSAGE_ROOTDEVICE = "M-SEARCH * HTTP/1.1\r\n" + "ST: upnp:rootdevice\r\n"
+			+ "MX: 3\r\n" + "MAN: `ssdp:discover`\r\n".replace('`', '"') + "HOST: 239.255.255.250:1900\r\n\r\n";
+
+	/**
+	 * MAIN
+	 */
+	public static void main(String[] args) throws Exception {
+		SSDPNetworkClient client = new SSDPNetworkClient();
+		client.multicast();
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * SSDP discover sent Response from: /192.168.2.100 M-SEARCH * HTTP/1.1 ST:
+ * upnp:rootdevice MX: 3 MAN: "ssdp:discover" HOST: 239.255.255.250:1900
+ */</template><template autoinsert="true" context="java" deleted="false" description="Simple Java UDP Client" enabled="true" name="MyIO_UDPClient">import java.io.*;
+import java.net.*;
+
+/*
+ * Simple Java UDP Client
+ */
+
+public class UDPClient {
+	public static void main(String args[]) throws Exception {
+		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+		DatagramSocket clientSocket = new DatagramSocket();
+		InetAddress IPAddress = InetAddress.getByName("localhost");
+		byte[] sendData = new byte[1024];
+		byte[] receiveData = new byte[1024];
+		String sentence = inFromUser.readLine();
+		sendData = sentence.getBytes();
+		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
+		clientSocket.send(sendPacket);
+		DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+		clientSocket.receive(receivePacket);
+		String modifiedSentence = new String(receivePacket.getData());
+		System.out.println("FROM SERVER:" + modifiedSentence);
+		clientSocket.close();
+	}
+}
+
+/*
+ * Example Output
+ */</template><template autoinsert="true" context="java" deleted="false" description="Die Klasse URL ermöglicht in Verbindung mit einem InputStream und einem BufferedReader das Auslesen des Quelltextes von Webseiten." enabled="true" name="MyIO_URLSourceCodeHTML">import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+/*
+ * Die Klasse URL bietet Möglichkeiten des Zugriffs z.B. auf Webseiten.
+ */
+
+public class Verbindung {
+
+	public static void main(String[] args) {
+		try {
+			URL url = new URL("http://www.javabeginners.de");
+			show(url);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void show(URL url) throws IOException {
+		InputStream in = url.openStream();
+		BufferedReader buff = new BufferedReader(new InputStreamReader(in));
+		String s;
+		while ((s = buff.readLine()) != null) {
+			System.out.println(s);
+		}
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * &lt;!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"&gt;
+ * &lt;html&gt;&lt;head&gt;
+ * &lt;title&gt;302 Found&lt;/title&gt;
+ * &lt;/head&gt;&lt;body&gt;
+ * &lt;h1&gt;Found&lt;/h1&gt;
+ * &lt;p&gt;The document has moved &lt;a href="https://javabeginners.de/"&gt;here&lt;/a&gt;.&lt;/p&gt;
+ * &lt;hr&gt;
+ * &lt;address&gt;Apache Server at javabeginners.de Port 80&lt;/address&gt;
+ * &lt;/body&gt;&lt;/html&gt;
  */</template><template autoinsert="true" context="java" deleted="false" description="How to iterate through collection objects?" enabled="true" name="MyIterator_hasNext">import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15733,7 +16999,79 @@ public class WebViewSample extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-}</template><template autoinsert="true" context="java" deleted="false" description="Basic LinkedHashMap Operations." enabled="true" name="MyLinkedHashMap_Basic">import java.util.LinkedHashMap;
+}</template><template autoinsert="true" context="java" deleted="false" description="Lambda Ausdrücke helfen, die schlecht lesbaren, langen Deklarationen innerer anonymer Klassen zu vermeiden." enabled="true" name="MyLambda_Calculate">/*
+ * Sollen mehrere Anweisungen in der Methode ausgeführt werden, so werden sie in
+ * geschweifte Klammern eingeschlossen und jeweils durch Semikolon abgeschlossen.
+ * Bei nur einer Anweisung kann der Einschluss in Klammern auch entfallen.
+ * 
+ * Besitzt die Methode einen Rückgabewert, so wird dieser als letztes notiert,
+ * ebenfalls durch Semikolon abgeschlossen
+ */
+
+public class LambdaCalculateTest {
+	interface Rectangle {
+		public double getArea(double length, double width);
+	}
+
+	public static void main(String[] args) {
+		Rectangle rect = (l, w) -&gt; {
+			l *= 2;
+			w *= 3;
+			return l * w;
+		};
+		System.out.println("Flaeche: " + rect.getArea(4, 3));
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Flaeche: 72.0
+ */</template><template autoinsert="true" context="java" deleted="false" description="Lambda Ausdrücke helfen, die schlecht lesbaren, langen Deklarationen innerer anonymer Klassen zu vermeiden." enabled="true" name="MyLambda_SimpleHelloWorld">/*
+ * Besitzt eine Methode keinen Parameter, so werden lediglich die leeren
+ * runden Klammern notiert
+ */
+
+public class LambdaHello {
+
+	interface Printer {
+		void print();
+	}
+
+	public static void main(String[] args) {
+		Printer p = () -&gt; System.out.println("Hallo Welt!");
+		p.print(); // "Hallo Welt!"
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Hallo Welt!
+ */</template><template autoinsert="true" context="java" deleted="false" description="Lambda Ausdrücke helfen, die schlecht lesbaren, langen Deklarationen innerer anonymer Klassen zu vermeiden." enabled="true" name="MyLambda_TwoHelloWorld">/*
+ * Das folgende Beispiel zeigt wie dies mit der Definition eines eigenen
+ * Interfaces, zwei Methodenparametern und zwei Anweisungen funktioniert
+ */
+
+public class LambdaPrintTest {
+	interface Printer {
+		public void print(String s, String t);
+	}
+
+	public static void main(String[] args) {
+		Printer p = (s, t) -&gt; {
+			t = t.toUpperCase();
+			System.out.println(s + " " + t);
+		};
+		p.print("Hallo", "Welt"); // Hallo WELT
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * Hallo WELT
+ */</template><template autoinsert="true" context="java" deleted="false" description="Basic LinkedHashMap Operations." enabled="true" name="MyLinkedHashMap_Basic">import java.util.LinkedHashMap;
 
 /*
  * Here you can find example code for basic LinkedHashMap operation.
@@ -23768,6 +25106,47 @@ public class MyStringTokens {
  * 43
  * 67
  * 80
+ */</template><template autoinsert="true" context="java" deleted="false" description="Systemeigenschaften können mit System.getProperties() ermittelt werden." enabled="true" name="MySystem_getProperties">/*
+ * Systemeigenschaften können mit System.getProperties() ermittelt werden. 
+ */
+
+public class SystemeigenschaftenClass {
+	public static void main(String[] args) {
+		System.out.println(System.getProperties().toString().replace(',', '\n'));
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * {java.runtime.name=Java(TM) SE Runtime Environment
+ * sun.boot.library.path=/usr/lib/jvm/java-8-oracle/jre/lib/amd64
+ * java.vm.version=25.144-b01
+ * java.vm.vendor=Oracle Corporation
+ * java.vendor.url=http://java.oracle.com/
+ * .
+ * .
+ * .
+ */</template><template autoinsert="true" context="java" deleted="false" description="Mit Hilfe der Klasse Toolkit kann die Bildschirmgröße ausgelesen werden." enabled="true" name="MySystem_getScreenSize">import java.awt.Toolkit;
+
+/*
+ * Mit Hilfe der Klasse java.awt.Toolkit lassen sich die grafikrelavanten
+ * Zustandsparameter des Systems auslesen. Sie stellt die abstrakte Superklasse
+ * der aktuellen Implementationen des AWT dar.
+ */
+
+public class ScreenSize {
+
+	public static void main(String[] args) {
+		System.out.println(Toolkit.getDefaultToolkit().getScreenSize().width + " x "
+				+ Toolkit.getDefaultToolkit().getScreenSize().height);
+	}
+}
+
+/*
+ * Example Output
+ * 
+ * 1440 x 900
  */</template><template autoinsert="true" context="java" deleted="false" description="Java Daemon Thread Examples" enabled="true" name="MyThread_Daemon">package snippet_test;
 
 /*
